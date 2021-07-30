@@ -1,0 +1,50 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* 선택자와 같은 레벨의 요소중의 첫번쨰 요소를 선택 */
+    li:first-child{
+      color: red;
+    }
+
+    li:last-child{
+      color: antiquewhite;
+    }
+
+    .item:first-child{
+      color: green;
+    }
+
+    .box:first-child{
+      color: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li>first</li>
+    <li>second</li>
+    <li>third</li>
+    <li>forth</li>
+    <li>fifth</li>
+  </ul>
+
+  <ul>
+    <li class="item">first</li>
+    <li class="item">second</li>
+    <li class="item">third</li>
+    <li class="item">forth</li>
+    <li class="item">fifth</li>
+  </ul>
+
+  <div class="box">first</div>    
+  <div class="box">second</div>
+  <div class="box">third</div>
+  <div class="box">forth</div>
+  <div class="box">fifth</div>
+
+</body>
+
+</html>

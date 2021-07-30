@@ -1,0 +1,462 @@
+/* 
+  테마 색깔
+  background-color: #CB997E 테두리 배경
+  background-color: #DDBEA9 제목 배경
+  background-color: #FFE8D6 제목 중간 색
+  background-color: #B7B7A4 본문 배경
+  background-color: #A5A58D 중간 배경
+  background-color: #6B705C 진한 배경
+  background-color: #FFFFFF 글씨 색
+
+폰트목록 
+/* 
+  Do Hyeon, Nanum Myeongjo
+  @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Myeongjo&display=swap');
+
+  Do Hyeon
+  font-family: 'Do Hyeon', sans-serif;
+
+  Nanum Myeongjo
+  font-family: 'Nanum Myeongjo', serif;
+*/
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Myeongjo&display=swap');
+
+
+/* 그리드 에리어 선언 */
+header {
+  grid-area: header;
+  text-align: center;
+  color: #FFFFFF;
+  border: 3px double;
+  border-color: #CB997E;
+  border-radius: 5%;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 20px;
+}
+
+h1 {
+  scroll-margin-top: 4rem;
+}
+
+h3 {
+  background-color: #6B705C;
+  margin: 0;
+  text-align: center;
+}
+
+h6 {
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h6 a {
+  color: #FFFFFF;
+  font-family: 'Do Hyeon', sans-serif;
+  text-decoration: none;
+  background-color: #6B705C;
+  padding: 10px;
+  border-radius: 10%;
+}
+
+.banner {
+  grid-area: banner;
+
+  background-image: url(../img/banner.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 300px;
+  height: 200px;
+  border: 3px double;
+  border-color: #CB997E;
+
+  font-size: 50px;
+  font-family: 'Do Hyeon', sans-serif;
+  color: #FFFFFF;
+  display: inline-block;
+}
+
+.nullbox {
+  padding-top: 60px;
+}
+
+.banner span.last-text {
+  padding-left: 80px;
+}
+
+/* 네비게이션 */
+nav {
+  grid-area: nav;
+  background-color: #A5A58D;
+  font-family: 'Do Hyeon', sans-serif;
+  position: sticky;
+  top: 1rem;
+
+  z-index: 20;
+}
+
+/* 메뉴 */
+nav ul {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0;
+  list-style: none;
+  margin: 0;
+  text-shadow: 1px 6px 5px #6B705C;
+  border: 3px double;
+  border-color: #CB997E;
+
+}
+
+nav ul li {
+  font-size: 30px;
+}
+
+nav ul li:hover {
+  transform: scale(1.2);
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+
+article {
+  grid-area: content;
+  background-color: #B7B7A4;
+  border: 3px double;
+  border-color: #CB997E;
+  color: #FFFFFF;
+}
+
+selection {
+  background-color: #A5A58D;
+  color: white;
+}
+
+p {
+  color: #6B705C;
+  font-size: 15px;
+  text-align: center;
+  font-family: 'Nanum Myeongjo', serif;
+}
+
+p::first-letter {
+  font-size: 1.5em;
+}
+
+.food-title {
+  text-align: center;
+  font-size: 40px;
+  margin: 0;
+  padding: 0;
+  border: 2px double;
+  border-color: #CB997E;
+  border-radius: 20% 20% 0 0;
+  background-color: #6B705C
+}
+
+.food-title a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.food-img {
+  width: calc(100% - 5px);
+  border: 2px dotted;
+  border-color: #CB997E;
+}
+
+.title-text {
+  font-size: 30px;
+}
+
+/* 재료 테이블 */
+.material-list {
+  text-align: center;
+  background-color: #6B705C;
+  color: #FFFFFF;
+  border: 1px solid #CB997E;
+  width: 100%;
+  height: fit-content;
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+
+/* 재료 테이블 목록 (헤더) */
+.material-list thead tr td {
+  background-color: #DDBEA9;
+  color: #6B705C;
+}
+
+/* 표 안에 테두리를 넣어주는 부분  tr과 td를 같이 바꾼다.*/
+.material-list tr,
+td {
+  border: 1px solid #CB997E;
+}
+
+/* 재료 테이블의 재료항목 배경색 */
+.material-list tbody tr:nth-child(2n -1) {
+  background-color: #A5A58D;
+}
+
+/* 재료 테이블의 재료항목 배경색 2번째 */
+.material-list tbody tr:nth-child(2n) {
+  background-color: #6B705C;
+}
+
+/* 총 몇가지인지 항목의 배경 (tfoot) */
+.material-list tfoot tr td {
+  background-color: #DDBEA9;
+  color: #6B705C;
+}
+
+/* 조리방법 */
+.recipy-rules {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 12px;
+  background-color: #6B705C;
+  padding: 1em;
+  color: #FFFFFF;
+}
+
+/* 조리방법 항목 */
+.recipy-rules li {
+  list-style: none;
+  counter-increment: i;
+  margin-bottom: 20px;
+}
+
+/* 조리방법 항목 텍스트 선택시 강조 */
+.recipy-rules li::selection {
+  background-color: black;
+}
+
+/* 조리방법 항목 텍스트중 중요강조 */
+.recipy-rules li span::selection {
+  background-color: red;
+  color: yellow;
+}
+
+/* 조리방법 뒤에 ✔가 붙도록 */
+.recipy-rules li::after {
+  content: " ✔";
+}
+
+/* 조리방법 앞에 순서 */
+.recipy-rules li::before {
+  content: counter(i) ". ";
+  /* padding: 0.5rem 0.2rem 0.5rem 0.0.1em; */
+}
+
+aside {
+  grid-area: side-bar;
+
+  position: sticky;
+  margin-bottom: 30px;
+  color: #FFFFFF;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+aside img {
+  width: 100%;
+  height: 100%;
+}
+
+footer {
+  grid-area: footer;
+}
+
+/* small */
+/* mobile s -320px */
+body {
+  background-image: url(../img/bg_2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 300px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+  grid-template-areas:
+    "header"
+    "banner"
+    "nav"
+    "content"
+    "side-bar"
+    "footer"
+  ;
+}
+
+nav ul {
+  font-size: 50px;
+}
+
+.side-text {
+  font-size: 20px;
+}
+
+/* Tablet - 768px */
+@media (min-width: 768px) {
+  body {
+    width: 700;
+    margin: 0 auto;
+    grid-template-columns: 2fr 5fr;
+    grid-template-areas:
+      "header header"
+      "banner banner"
+      "nav nav"
+      "side-bar content"
+      "footer footer"
+    ;
+  }
+
+  header {
+    font-size: 40px;
+    border: 5px double;
+    border-color: #CB997E;
+  }
+
+  .banner {
+    width: calc(100% - 11px);
+    border: 6px solid;
+    border-color: #CB997E;
+    font-size: 60px;
+  }
+
+  .nullbox {
+    padding-top: 40px;
+  }
+
+  .banner span.last-text {
+    padding-left: 420px;
+  }
+
+  nav ul li {
+    font-size: 60px;
+  }
+
+
+  aside {
+    height: fit-content;
+    position: sticky;
+  }
+
+  .food-title {
+    font-size: 50px;
+  }
+
+  p {
+    font-size: 23px;
+  }
+
+  .material-list {
+    font-size: 1.5em;
+  }
+
+  .recipy-rules {
+    font-size: 20px;
+  }
+
+  h1 {
+    scroll-margin-top: 6.5rem;
+  }
+
+  h6 {
+    font-size: 40;
+  }
+
+  aside {
+    position: sticky;
+    top: 7rem;
+  }
+
+
+}
+
+
+
+@media (min-width: 1440px) {
+  body {
+    width: 1200px;
+    margin: 0 auto;
+    grid-template-columns: 2fr 6fr 2fr;
+    grid-template-areas:
+      "header header  header"
+      "banner banner  baneer"
+      "nav    content side-bar"
+      "footer footer  footer"
+    ;
+  }
+
+  header {
+    border: 9px double;
+    border-color: #CB997E;
+    font-size: 80px;
+  }
+
+  nav {
+    height: fit-content;
+  }
+
+  nav ul {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .banner {
+    width: calc(100% + 239px);
+    border-color: #CB997E;
+    font-size: 75px;
+  }
+
+  .nullbox {
+    padding-top: 0px;
+  }
+
+  .banner span.last-text {
+    padding-left: 850px;
+  }
+
+  nav ul li {
+    font-size: 60px;
+  }
+
+
+  .food-title {
+    font-size: 80px;
+  }
+
+  p {
+    font-size: 30px;
+  }
+
+  .material-list {
+    font-size: 2em;
+  }
+
+  .recipy-rules {
+    font-size: 25px;
+  }
+
+  h1 {
+    scroll-margin-top: 0;
+  }
+
+  h6 {
+    font-size: 60;
+  }
+
+  aside {
+    position: sticky;
+    top: 1rem;
+  }
+  
+  .side-text {
+    font-size: 30px;
+  }
+}

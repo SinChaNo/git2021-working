@@ -1,0 +1,57 @@
+/*컬러 목록 */
+
+/* 
+color: #565264 (배경 강조색)
+color: #706677 (배경 중간색)
+color: #A6808C (배경 연한색)
+color: #CCB7AE (내용 강조색)
+color: #D6CFCB (내용 연한색)
+*/
+
+body {
+  background-color: #565264;
+}
+
+.title-box {
+  background-color: #706677;
+}
+
+.title-box h1 {
+  color: #CCB7AE;
+}
+
+.navigation ul {
+  background-color: #A6808C;
+  color: #D6CFCB;
+}
+
+.food {
+  background-color: #706677;
+}
+
+.food p {
+  color: #D6CFCB;
+
+}
+
+.title-text {
+  background-color: #A6808C;
+  /* background-color: blue; */
+  color: #CCB7AE;
+}
+
+/* 재료 테이블 */
+.material-list {
+  background-color: #A6808C;
+  color: #D6CFCB;
+  border: #CCB7AE;
+}
+
+.material-list thead {
+  background-color: #565264;
+}
+
+.recipy-rules {
+  background-color: #A6808C;
+  color: #D6CFCB;
+}

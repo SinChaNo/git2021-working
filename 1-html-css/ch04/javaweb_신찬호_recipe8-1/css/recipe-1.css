@@ -1,0 +1,297 @@
+/*컬러 목록 */
+
+/* 
+color: #181d2c (배경 강조색)
+color: #001D3D (배경 중간색)
+color: #003566 (배경 연한색)
+color: #FFC300 (제목  노란색)
+color: #FFFFFF (본문)
+*/
+
+/* 폰트목록 */
+/* 
+Do Hyeon, Nanum Myeongjo
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Myeongjo&display=swap');
+
+font-family: 'Do Hyeon', sans-serif;
+font-family: 'Nanum Myeongjo', serif;
+
+Do Hyeon
+font-family: 'Do Hyeon', sans-serif;
+
+Nanum Myeongjo
+font-family: 'Nanum Myeongjo', serif;
+*/
+
+/* Font*/
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Myeongjo&display=swap');
+
+/* 전체 요소 선택 */
+* {
+  font-family: ;
+  box-sizing: border-box;
+  margin: 0 auto;
+  font-family: 'Nanum Myeongjo', serif;
+}
+
+/* 기본 배경 */
+body {
+  /* background-color: #181d2c; */
+  width: 800px;
+  background-image: url('../img/bg_2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+article {
+  /* calculate: 계산하다 */
+  /* - 를 띄워 써주지 않으면 부호로 인식 */
+  width: calc(100% - 200px - 1rem);
+  float: left;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* 사이드바 */
+aside {
+  margin-top: 3rem;
+  width: 200px;
+  float: left;
+  position: sticky;
+  top: 8rem;
+  background-color: #003566;
+  color: #FFFFFF;
+  font-size: 14px;
+}
+
+aside p::first-letter {
+  font-size: 2em;
+}
+
+/* 사이드바 제목 */
+aside h1 {
+  color: #FFC300;
+  margin-bottom: 10px;
+  background-color: #295683;
+  text-align: center;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+/* 푸터 Aside 에서 배치 초기화 */
+footer {
+  clear: both;
+  color: #FFFFFF;
+}
+
+/* 스크롤시 네비와의 간격 5rem */
+h2 {
+  scroll-margin-top: 5rem;
+  background-color: #295683;
+  margin-top: 20px;
+  font-family: 'Do Hyeon', sans-serif;
+
+
+}
+
+/* 사진 float left 를 클리어해서 글자를 왼쪽으로 */
+h3 {
+  clear: left;
+  background-color: #295683;
+  margin-top: 20px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+/* section {
+  scroll-margin-top: 8rem;
+} */
+
+/* 첫 제목배경 */
+.title-box {
+  background-color: #001D3D;
+}
+
+/* 제목 h1의 css */
+.title-box h1 {
+  font-size: 30px;
+  color: #FFC300;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+/* 네비게이션 */
+nav {
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+}
+
+/* 네비게이션 ul */
+.navigation ul {
+  /*  텍스트를 중앙으로 */
+  text-align: center;
+  /* 기본 padding 값 초기화 */
+  padding: 1rem 0;
+  background-color: #001D3D;
+  color: white;
+  list-style: none;
+  border: 1px solid black;
+  border-radius: 10%;
+}
+
+/* 네비게이션의 항목 */
+.navigation ul li {
+  background-color: #003566;
+  /* margin: 10px 10px; */
+  border: 3px solid black;
+  border-radius: 10%;
+  display: inline-block;
+}
+
+.navigation ul li:hover {
+  transform: scale(1.2);
+}
+
+/* 네비게이션의 링크(a)태그 */
+.navigation ul a {
+  font-size: 30px;
+  color: #FFFFFF;
+  /* 밑줄 없애주는 태그 */
+  text-decoration: none;
+}
+
+/* 네비게이션으로 돌아가는 버튼 */
+.back {
+  color: white;
+  font-size: 20px;
+  background-color: 003566;
+  text-decoration: none;
+  margin-left: 40%;
+}
+
+
+/* 음식설명보드 */
+.food {
+  background-color: #003566;
+  /* 설명이 끝나면 다음 설명사이에 넣는 마진값 */
+  margin-top: 50px;
+}
+
+/* 음식사진 */
+.food-img {
+  float: left;
+  margin: 0 0.5rem 0 0;
+  width: 50%;
+  height: 20%;
+}
+
+/* 이미지 위에 마우스 포인트가 올라갈 시 */
+.food-img:hover {
+  width: 100%;
+  height: 40%;
+}
+
+/* 음식설명란의 p태그 */
+.food p {
+  color: #FFC300;
+  font-size: 15px;
+}
+
+/* 음식설명란의 첫 글자를 두배로 키움 */
+.food p::first-letter {
+  font-size: 2em;
+}
+
+/* 글머리나 제목에 사용 */
+.title-text {
+  font-size: 40px;
+  padding: 10px 0px;
+  color: #FFC300;
+  text-decoration: none;
+  margin: 20px 0;
+  font-family: 'Do Hyeon', sans-serif;
+  text-shadow: 5px 5px 10px #181d2c;
+}
+
+/* 재료 테이블 */
+.material-list {
+  background-color: #003566;
+  color: #FFFFFF;
+  border: 1px solid #FFC300;
+  width: 100%;
+  height: 30%;
+}
+
+
+/* 재료 테이블 목록 (헤더) */
+.material-list thead tr td {
+  background-color: #181d2c;
+  color: #f1d987;
+}
+
+/* 표 안에 테두리를 넣어주는 부분  tr과 td를 같이 바꾼다.*/
+.material-list tr,
+td {
+  border: 1px solid #FFC300;
+}
+
+/* 재료 테이블의 재료항목 배경색 */
+.material-list tbody tr:nth-child(2n -1) {
+  background-color: #12395f;
+}
+
+/* 재료 테이블의 재료항목 배경색 2번째 */
+.material-list tbody tr:nth-child(2n) {
+  background-color: #295683;
+}
+
+/* 총 몇가지인지 항목의 배경 (tfoot) */
+.material-list tfoot tr td {
+  background-color: #1f2c3a;
+  text-align: center;
+}
+
+/* 조리방법 */
+.recipy-rules {
+  font-size: 14px;
+  background-color: #003566;
+  padding: 1em;
+  color: #FFFFFF;
+}
+
+/* 조리방법 항목 */
+.recipy-rules li {
+  list-style: none;
+  counter-increment: i;
+  margin-bottom: 20px;
+}
+
+/* 조리방법 항목 텍스트 선택시 강조 */
+.recipy-rules li::selection {
+  background-color: black;
+}
+
+/* 조리방법 항목 텍스트중 중요강조 */
+.recipy-rules li span::selection {
+  background-color: red;
+  color: yellow;
+}
+
+/* 조리방법 뒤에 ✔가 붙도록 */
+.recipy-rules li::after {
+  content: " ✔";
+}
+
+/* 조리방법 앞에 순서 */
+.recipy-rules li::before {
+  content: counter(i) ". ";
+  font-size: 1.5em;
+  border: 2px solid #FFC300;
+  border-radius: 45%;
+  background-color: #1f2c3a;
+  margin-right: 0.5rem;
+  padding-left: 0.5rem;
+  /* padding: 0.5rem 0.2rem 0.5rem 0.0.1em; */
+  padding: 0.0.1 em;
+}

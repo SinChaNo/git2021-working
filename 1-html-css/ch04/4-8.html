@@ -1,0 +1,123 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 700px;
+      margin: 0 auto;
+    }
+
+    nav {
+      /* 스크롤박스 외부 원래문서 배치 */
+      /* 스크롤박스 내부 들어오면 top/left */
+      position: sticky;
+      top: 0px;
+      z-index: 10;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      /* 태그안에 컨텐츠 중앙정렬 */
+      text-align: center;
+    }
+
+    nav li {
+      /* 옆으로 나열 */
+      display: inline-block;
+      margin-left: 10rem;
+    }
+
+    nav li:nth-child(1){
+      margin-left: 0;
+    }
+
+    section{
+      /* a태그로 스크롤 이동했을 때 상단 마진을 줌 */
+      /* id가 걸려있는 요소에 걸어야함 */
+      scroll-margin-top: 8rem;
+    }
+
+    article{
+      /* calculate: 계산하다 */
+      /* - 를 띄워 써주지 않으면 부호로 인식 */
+      width: calc(100% - 200px - 1rem);
+      float: left;
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    aside{
+      width: 200px;
+      float: left;
+      position: sticky;
+      top:8rem
+    }
+
+    footer{
+      clear: both;
+    }
+
+    header,
+    nav,
+    .banner,
+    article,
+    footer,
+    aside {
+      background-color: burlywood;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Header</h1>
+  </header>
+  <nav>
+    <h1>Nav</h1>
+    <ul>
+      <li><a href="#menu-1">Menu1 </a></li>
+      <li><a href="#menu-2">Menu2 </a></li>
+      <li><a href="#menu-3">Menu3 </a></li>
+    </ul>
+  </nav>
+  <article>
+    <section id="menu-1">
+      <h2>menu1</h2>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil quos eum enim totam perferendis quis iste at ullam earum, esse eveniet accusamus autem est soluta in quaerat unde quidem dolores?</p>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil quos eum enim totam perferendis quis iste at ullam earum, esse eveniet accusamus autem est soluta in quaerat unde quidem dolores?</p>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil quos eum enim totam perferendis quis iste at ullam earum, esse eveniet accusamus autem est soluta in quaerat unde quidem dolores?</p>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil quos eum enim totam perferendis quis iste at ullam earum, esse eveniet accusamus autem est soluta in quaerat unde quidem dolores?</p>
+    </section>
+    <section id="menu-2">
+      <h2>menu2</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam in illum at aut, atque similique esse eos exercitationem odio reiciendis cum commodi adipisci nesciunt? Voluptatum dignissimos et sed neque? Quae.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam in illum at aut, atque similique esse eos exercitationem odio reiciendis cum commodi adipisci nesciunt? Voluptatum dignissimos et sed neque? Quae.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam in illum at aut, atque similique esse eos exercitationem odio reiciendis cum commodi adipisci nesciunt? Voluptatum dignissimos et sed neque? Quae.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam in illum at aut, atque similique esse eos exercitationem odio reiciendis cum commodi adipisci nesciunt? Voluptatum dignissimos et sed neque? Quae.</p>
+    </section>
+    <section id="menu-3">
+      <h2>menu3</h2>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus quibusdam ab consequuntur nihil excepturi dolor nisi rem sequi? Ducimus exercitationem optio aliquid voluptas possimus cum quae magnam esse error adipisci.</p>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus quibusdam ab consequuntur nihil excepturi dolor nisi rem sequi? Ducimus exercitationem optio aliquid voluptas possimus cum quae magnam esse error adipisci.</p>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus quibusdam ab consequuntur nihil excepturi dolor nisi rem sequi? Ducimus exercitationem optio aliquid voluptas possimus cum quae magnam esse error adipisci.</p>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus quibusdam ab consequuntur nihil excepturi dolor nisi rem sequi? Ducimus exercitationem optio aliquid voluptas possimus cum quae magnam esse error adipisci.</p>
+    </section>
+  </article>
+  <aside>
+    <h1>Aside</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas fugiat expedita nam, debitis exercitationem dicta, molestias nulla optio eaque illo voluptates officia, minima provident at vitae dolor in dolorum! Consequatur?</p>
+  </aside>
+  <footer>
+    <h3>footer</h3>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas fugiat expedita nam, debitis exercitationem dicta, molestias nulla optio eaque illo voluptates officia, minima provident at vitae dolor in dolorum! Consequatur?</p>
+  </footer>
+</body>
+
+</html>
