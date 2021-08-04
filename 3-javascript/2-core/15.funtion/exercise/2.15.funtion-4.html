@@ -1,0 +1,22 @@
+<html>
+
+<body>
+  <script>
+    let x = prompt('x를 입력하세요', ''); //3
+    let n = prompt('n을 입력하세요', ''); //3
+    
+    function pow(x, n) {
+      let result = x;
+      for (let i = 1; i < n; i++) {
+        result *= x;
+      }
+      return result;
+    }
+
+    if(n <= 1) {
+      alert('잘못 입력하셨습니다.');
+    }else alert(pow(x, n));
+  </script>
+</body>
+
+</html>

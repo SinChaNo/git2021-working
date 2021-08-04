@@ -1,0 +1,25 @@
+<html>
+
+<body>
+  <script>
+    function showMessage() {
+      // 지역변수
+      var var1 = 1;
+      if (true){
+        let var2 = b;
+      }
+      // 지역(local) 변수 -> 함수 안에 변수
+      
+      // 블럭(block) 범위 변수
+      let message = "안녕하세요";
+      alert(message)
+    }
+
+    showMessage();//안녕하세요
+
+    alert(massage);// referenceError
+
+  </script>
+</body>
+
+</html>
