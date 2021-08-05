@@ -1,0 +1,32 @@
+<html>
+  <body>
+    <script>
+      let n = 5; //높이 값
+      let s = n - 1; //공백 값
+      let j = 1; // * 횟수 값
+      let dia1 = '' ;// 윗 삼각형
+      let dia2 = '' ;// 밑 삼각형
+      let dia3 = '' ;// 다이아몬드 
+
+      for(let i = s; i >= 1; i--){
+        dia1 += (' '.repeat(i) + '*'.repeat(j) + '\n'); 
+        j += 2; //* 갯수 증가값
+      }
+
+      for(let i = 0; i < n; i++){
+        dia2 += (' '.repeat(i) + '*'.repeat(j) + '\n'); 
+        j -= 2; //* 갯수 감소값 7 5 3 2 -1
+        if (j < 1) break; // -1으로 가게되면 에러가 나서 출력이 안됨
+      }
+      
+      dia3 += dia1 + dia2;
+
+      alert(dia3);
+
+      // for(let i = 0; i <= n; i++){
+      //   console.log(' '.repeat(i) + '*'.repeat(j)); 
+      //   j -= 2; //* 갯수 증가값
+      // }
+      </script>
+  </body>
+</html>
