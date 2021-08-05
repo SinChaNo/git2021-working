@@ -1,21 +1,23 @@
 <html>
-  <body>
-    <script>
-      let n = 5; //높이 값
-      let s = n - 1; //공백 값
-      let j = 1; // * 횟수 값
-      let mes = "" ;// alert 
 
-      for(let i = s; i >= 1; i--){
-        mes += (' '.repeat(i) + '*'.repeat(j) + '\n'); 
-        j += 2; //* 갯수 증가값
-      }
+<body>
+  <script>
+    let n = 5; //높이 값
+    let s = n - 1; //공백 값
+    let j = 1; // * 횟수 값
+    let mes = ""; // alert 
 
-      alert(mes);
-      // for(let i = s; i >= 1; i--){
-      //   console.log(' '.repeat(i) + '*'.repeat(j)); 
-      //   j += 2; //* 갯수 증가값
-      // }
-      </script>
-  </body>
+    for (let i = s; i >= 1; i--) {
+      mes += (' '.repeat(i) + '*'.repeat(j) + '\n');
+      j += 2; //* 갯수 증가값
+    }
+
+    alert(mes);
+    // for(let i = s; i >= 1; i--){
+    //   console.log(' '.repeat(i) + '*'.repeat(j)); 
+    //   j += 2; //* 갯수 증가값
+    // }
+  </script>
+</body>
+
 </html>
