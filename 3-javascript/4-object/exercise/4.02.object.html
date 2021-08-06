@@ -1,0 +1,31 @@
+<html>
+
+<body>
+  <script>
+    // 함수   함수 명(매개변수)
+    function isEmpty(obj){
+      // 반복 매개변수(넣은값) 안에 무언가 있는지 전부 확인
+      for(let i in obj){
+        // 있다면 false를 반환
+        return false;
+      }
+      // 없다면 true;를 반환
+      return true;
+    }
+
+    // 겍체에 아무것도 없을시
+    let schedule = {}; 
+
+    // isEmpty 함수를 가져와 객체를 넣어 확인해본다. 
+    alert(isEmpty(schedule)); // true를 출력
+
+    // 객체에 값이 있을 시
+    schedule["8:30"] = "get up";
+
+    // isEmpty 함수를 가져와 객체를 넣어 확인해본다
+    alert(isEmpty(schedule)); // false를 출력
+
+  </script>
+</body>
+
+</html>

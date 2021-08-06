@@ -1,0 +1,35 @@
+<html>
+
+<body>
+
+  <script>
+    // // 함수 호출 전
+    let menu = {
+      width: 200,
+      height: 300,
+      title: "My menu"
+    };
+    
+    multiplyNumeric(menu);
+    
+    // // 함수 호출 후
+    // menu = {
+      //   width: 400,
+      //   height: 600,
+      //   title: "My menu"
+      // };
+      
+      function multiplyNumeric() {
+        for (let x in menu) {
+          if (typeof menu[x] == 'number') {
+            menu[x] *= 2;
+          }
+        }
+        return menu;
+      }
+      
+      console.log(menu);
+      </script>
+</body>
+
+</html>
