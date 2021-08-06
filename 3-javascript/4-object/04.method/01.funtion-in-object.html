@@ -1,0 +1,44 @@
+<html>
+
+<body>
+
+  <script>
+    let user = {
+      name: "John",
+      age: 30,
+      phone: {
+        mobile: "010-1234-1234",
+        home: "02-1234-1234",
+        company: "031-1231-3214"
+      }
+
+      // sayHi: function() {
+      // 속성이 함수 때 단축표기법
+      // sayHi() {
+      //   alert("안녕하세요");
+      // }
+    };
+    console.log(user.phone.mobile);
+
+    user.sayHi();
+  </script>
+
+  <script>
+    let user = {
+      name: "John",
+      age: 30,
+      phone: {
+        mobile: "010-1234-1234",
+        home: "02-1234-1234",
+        company: "031-1231-3214"
+      }
+    };
+
+    function sayHi();
+    console.log(user.phone.mobile);
+
+    user.sayHi();
+  </script>
+</body>
+
+</html>
