@@ -1,0 +1,57 @@
+<html>
+
+<body>
+
+  <script>
+    //  데이터를 순차적으로 밀어 넣고, 들어간 순서대로 꺼내야함
+
+    // 대기열(queue): FIFO(First In First Out)
+    // 큐에 요소추가: enqueue
+    // 큐에 요소추출: dequeue
+
+    // ["hong", "john", "donald", "kim", "lee"]
+    
+    //key-value 형태의 자료구조, key를 문자말고 다른 것도 가능
+    // 연관배열
+    let queue = new Map(); 
+    let head = 0; //가장 앞쪽 key를 저장하는 변수
+    let tail = 0; //가장 뒤쪽 key를 저장하는 변수
+
+    // queue에 요소(itme) 추가, tail위치에 넣음
+    // object의 tail값의 속성을 만듦 "0", "1", "2"
+    queue.set(tail++, "hong"); //맵.set(키, 값)
+    queue.set(tail++, "john");
+    queue.set(tail++, "donald");
+    queue.set(tail++, "kim");
+    queue.set(tail++, "lee");
+
+    console.log(queue);
+
+    // queue에서 요소 꺼내기(deque)
+    // head위치에서 꺼내고 key삭제
+    console.log(queue.get(head)); // map.get(key) 0, hong
+    queue.delete(head++);     // 0, queue.delete(0);
+    console.log(queue);
+    
+    console.log(queue.get(head)); // map.get(key) 0, hong
+    queue.delete(head++);     // 0, queue.delete(0);
+    console.log(queue);
+    
+    console.log(queue.get(head)); // map.get(key) 0, hong
+    queue.delete(head++);     // 0, queue.delete(0);
+    console.log(queue);
+    
+    console.log(queue.get(head)); // map.get(key) 0, hong
+    queue.delete(head++);     // 0, queue.delete(0);
+    console.log(queue);
+    
+    console.log(queue.get(head)); // map.get(key) 0, hong
+    queue.delete(head++);     // 0, queue.delete(0);
+    console.log(queue);
+
+    // 키 값에 따라서 정렬하지 않음, 추가한 순서대로만 만들어짐
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<html>
+
+<body>
+
+  <script>
+    // 스택(stack): LIFO(Last In First Out)
+    // 스택에 요소 추가: push
+    // 스택에 요소 추출: pop
+
+    let arr = [];
+
+    arr.push("/home") // 홈화면 방문
+    arr.push("/list") // 목록조회 화면방문
+    arr.push("/detail/3") //게시글 번호가 3인 게시글 상세조회
+
+    // 스택의 크기
+    console.log(arr.length)
+
+    // 스택의 특정 요소 조회
+    console.log(arr[1]);
+
+    console.log(arr.pop()); //detail/3
+    console.log(arr.pop()); // list
+    console.log(arr.pop()); // home
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+<html>
+
+<body>
+
+  <script>
+    let arr = ["a", "b"];
+
+    arr.push(function () {
+      alert(this);
+    })
+
+    arr[2](); // 출력 안됨
+  </script>
+</body>
+
+</html>

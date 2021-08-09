@@ -1,0 +1,51 @@
+<html>
+
+<body>
+
+  <script>
+    // ["hong", "john", "donald", "kim", "lee"]
+    let queue = {};
+    let head = 0; //가장 앞쪽 key를 저장하는 변수
+    let tail = 0; //가장 뒤쪽 key를 저장하는 변수
+
+    // queue에 요소(itme) 추가, tail위치에 넣음
+    // object의 tail값의 속성을 만듦 "0", "1", "2"
+    queue[tail++] = "hong";
+    queue[tail++] = "john";
+    queue[tail++] = "donald";
+    queue[tail++] = "kim";
+    queue[tail++] = "lee";
+
+    console.log(queue);
+
+    // queue에서 요소 꺼내기(deque), head위치에서 꺼내고 key삭제
+    console.log(queue[head]); // 0, hong
+    delete queue[head++];     // 0, delete queue["0"]
+    console.log(queue);
+
+    console.log(queue[head]); 
+    delete queue[head++];
+    console.log(queue);
+    
+    console.log(queue[head]);
+    delete queue[head++];
+    console.log(queue);
+    
+    console.log(queue[head]);
+    delete queue[head++];
+    console.log(queue);
+    
+    console.log(queue[head]);
+    delete queue[head++];
+    console.log(queue);
+    
+    // 내부적으로 key가 숫자로 변환 가능하나
+    // 정렬 알고리즘이 실행될까>
+    // 속성을 반복해서 탐색할때 for-in
+
+    console.log(tail-head);
+
+  </script>
+</body>
+
+</html>
