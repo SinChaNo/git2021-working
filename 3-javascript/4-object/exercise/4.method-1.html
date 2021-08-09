@@ -1,0 +1,25 @@
+<html>
+
+<body>
+
+  <script>
+    function makeUser() {
+      return {
+        name: "John",
+        ref: this
+      };
+    };
+
+    let user = makeUser();
+
+    // user.ref는 window 객체(js 최상위 객체)이고
+    // makerUser는 window 객체에 함수로 생성된 것임
+
+    // 따라서 makeUser() -> window.makeUser()
+    // 함수실행의 컨택스트 window
+
+    alert(user.ref.name); // 결과가 어떻게 될까요?
+  </script>
+</body>
+
+</html>
