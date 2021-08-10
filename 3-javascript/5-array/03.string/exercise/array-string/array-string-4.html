@@ -1,0 +1,24 @@
+<html>
+
+<body>
+
+  <script>
+    function extractCurrencyValue(str){
+      let save = '' 
+      for (let i = 0; i <= str.length; i ++){
+        if(isNaN(str[i])){
+          // str = str.slice(str.slice(i + 1, ))
+          continue
+        } else save += str[i];
+        // str의 문자 하나 하나를 숫자와 비교해서 틀리면 그 위치를 추출
+      }
+      return save;
+    }
+    // function extractCurrencyValue(str) {
+    //   return +str.slice(1);
+    // }
+    console.log((extractCurrencyValue('$12ddfasdf5484dsfa684d000d'))); // true
+  </script>
+</body>
+
+</html>
