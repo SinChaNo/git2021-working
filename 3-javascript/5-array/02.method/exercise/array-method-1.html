@@ -1,0 +1,36 @@
+<html>
+
+<body>
+
+  <script>
+    // camelize("background-color") == 'backgroundColor';
+    // camelize("list-style-image") == 'listStyleImage';
+    // camelize("-webkit-transition") == 'WebkitTransition';
+
+    // let names = 'Bilbo, Gandalf, Nazgul';
+
+    // let arr = names.split(', ');
+
+    // for (let name of arr) {
+    //   alert(`${name}에게 보내는 메시지`); // Bilbo에게 보내는 메시지
+    // }
+
+    let ucFirst = (str) => str[0].toUpperCase() + str.slice(1);
+
+    function camelize(str) {
+      let arr = str.split('-');
+
+      for (let up of arr) {
+        arr = ucFirst(up);
+      }
+      str = arr.join();
+      return str
+    }
+
+    consol.log(camelize("background-color"));
+    consol.log(camelize("list-style-image"));
+    consol.log(camelize("-webkit-transition"));
+      </script>
+</body>
+
+</html>
