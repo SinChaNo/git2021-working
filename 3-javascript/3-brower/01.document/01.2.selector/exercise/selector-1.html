@@ -1,0 +1,74 @@
+<html>
+
+<body>
+  <form name="search">
+    <label>Search the site:
+      <input type="text" name="search">
+    </label>
+    <input type="submit" value="Search!">
+  </form>
+
+  <hr>
+
+  <form name="search-person">
+    Search the visitors:
+    <table id="age-table">
+      <tr>
+        <td>Age:</td>
+        <td id="age-list">
+          <label>
+            <input type="radio" name="age" value="young">less than 18
+          </label>
+          <label>
+            <input type="radio" name="age" value="mature">18-50
+          </label>
+          <label>
+            <input type="radio" name="age" value="senior">more than 50 </label>
+        </td>
+      </tr>
+      <tr>
+        <td>Additionally:</td>
+        <td>
+          <input type="text" name="info[0]">
+          <input type="text" name="info[1]">
+          <input type="text" name="info[2]">
+        </td>
+      </tr>
+
+    </table>
+
+    <input type="submit" value="Search!">
+  </form>
+
+  <script>
+    // 1
+    let table = document.querySelector('#age-table');
+    console.log(table);
+
+    //2
+    let label = document.getElementsByTagName('label');
+    console.log(label);
+
+    //3
+    let tdFrist1 = table.firstElementChild.firstElementChild.firstElementChild;
+    console.log(tdFrist1);
+    
+    let tdFrist2 = table.querySelector('td');
+    console.log(tdFrist2);
+    
+    //4
+    let form = document.getElementsByName('search')[0];
+    console.log(form);
+
+    //5
+    // let input1 = form.querySelector('input');
+    let input1 = form.getElementsByTagName('input')[0];
+    console.log(input1);
+    
+    //6
+    let input2 = form.getElementsByTagName('input')[1]
+    console.log(input2);
+  </script>
+</body>
+
+</html>
