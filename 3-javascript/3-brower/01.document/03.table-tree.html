@@ -1,0 +1,26 @@
+<html>
+
+<body>
+  <table>
+    <tbody></tbody>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>4</td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    //  테이블을 가져옴'
+    const table = document.body.children[0];
+
+    // '2'가 적힌 td를 가져옴
+    let td = table.rows[0].cells[1];
+    td.style.background = "red";
+  </script>
+</body>
+
+</html>
