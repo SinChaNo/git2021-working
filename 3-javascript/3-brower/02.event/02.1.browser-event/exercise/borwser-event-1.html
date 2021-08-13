@@ -1,0 +1,21 @@
+<html>
+  <body>
+    <input type="button" id="hider" value="Click to hide the text">
+    <div id="text">Text</div>
+    <script>
+      // 제어하려는 요소 선택
+      const text = document.querySelector('#text');
+      const hider = document.querySelector('#hider');
+
+      // 이벤트 리스너를 부착
+      hider.addEventListener("click", click)
+      
+      function click() {
+        text.hidden = true;
+      }
+
+      hider.onclick("click", click);
+
+    </script>
+  </body>
+</html>

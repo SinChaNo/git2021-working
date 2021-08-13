@@ -1,0 +1,43 @@
+<html>
+  <body>
+    <button id="elem">Click plz</button>
+    <!-- <script>
+      // 변수 선언부
+      const elem = document.querySelector("#elem");
+      // 이벤트 리스너 등록부
+      elem.addEventListener("Click", click);        
+
+      // 함수 선언부: 실제 이벤트가 처리되는 부분  
+      function click() {                             
+        alert("Click");                              
+      }                                              
+    </script> -->
+
+    <script>
+      const elem = document.querySelector("#elem");
+
+
+      const click = (event) => {
+        console.log(event);
+        // console.log(this); //button
+        alert('클릭');
+      }
+
+
+      // 요소에 이벤트를 처리할 함수를 등록
+      // 요소.addEventListener("이벤트명", 이벤트 처리 함수)
+     
+      // 익명 함수 스타일
+      elem.addEventListener("Click", () => {
+        alert("Click");
+      });
+
+      // 함수 별도 작성 및 callback으로 전달
+      elem.addEventListener("Click", click);
+
+      // function click() {
+      //   alert("Click");
+      // }
+    </script>
+  </body>
+</html>

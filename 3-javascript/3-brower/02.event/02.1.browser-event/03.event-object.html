@@ -1,0 +1,26 @@
+<html>
+  <body>
+    <button id="elem">Click plz</button>
+
+    <script>
+      const elem = document.querySelector("#elem");
+
+
+      // 이벤트가 실행될 떄 event 객체를 매개변수로 넘겨줌
+      const click = (e) => {
+        console.log(e);
+        console.log(e.target);
+        console.log(e.type);
+        console.log(e.clientX);
+        console.log(e.clientY);
+
+      }
+
+      elem.addEventListener("Click", click);
+
+      // function click() {
+      //   alert("Click");
+      // }
+    </script>
+  </body>
+</html>
