@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+  <title>ContactList</title>
+</head>
+
+<body style="width : 800px;" class="mx-auto mt-5">
+  <h1 id="title" class="text-center my-5">ContactList</h1>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
+  </script>
+
+  <form id="form" class="d-flex " onsubmit="return false;">
+    <input id="name-text" type="text" class="mx-auto px-3" placeholder="이름">
+    <input id="phone-text" type="text" class="mx-auto px-3" placeholder="연락처">
+    <input id="email-text" type="text" class="mx-auto px-3" placeholder="이메일">
+    <button id="add-btn" type="button" class="btn btn-primary mx-auto px-3">추가하기</button>
+  </form>
+
+  <table id="table" style="width: 800px; text-align: center;" class="table table-striped  position-absolute top-10 my-5">
+    <!-- 헤드 -->
+    <thead>
+      <tr>
+        <td>no.</td>
+        <td>이름</td>
+        <td>연락처</td>
+        <td>이메일</td>
+        <td>삭제하기</td>
+      </tr>
+    </thead>
+    <!-- 몸통 -->
+    <tbody id="contactList">
+      
+    </tbody>
+    <!-- 발 -->
+    <tfoot>
+    </tfoot>
+  </table>
+
+
+  <!-- 스크립트 -->
+  <script>
+    //요소
+    // 이름
+    const txtName = document.querySelector('#name-text');
+    // 연락처
+    const txtPhone = document.querySelector('#phone-text');
+    // 이메일
+    const txtEmail = document.querySelector('#email-text');
+    // 목록 테이블
+    const list = document.querySelector('#contactList');
+    // 추가버튼
+    const addBtn = document.querySelector('#add-btn');
+    // 삭제버튼
+    const rmovBtn = document.querySelector('#rmov-btn');
+    // 폼
+    const form = document.querySelector('#form');
+    // 테이블
+    const table = document.getElementsByTagName('table')
+    // 행(넘버)
+    const rows = document.getElementsByTagName('tr');
+    console.log(rows);
+
+
+    // 추가버튼 클릭시 이벤트
+    addBtn.addEventListener('click', add);
+    // 테이블 삭제
+    list.addEventListener('click', remove)
+
+    // console.log();
+    // console.log(txtName);
+    // console.log(txtPhone);
+    // console.log(txtEmail);
+    // console.log(list);
+    // console.log(addBtn);
+    // console.log(form);
+    // console.log(inputAll);
+
+    // 항목 추가 이벤트
+    function add(event) {
+      // 값 확인
+      console.log(txtName.value);
+      console.log(txtPhone.value);
+      console.log(txtEmail.value);
+      // 입력 누락이 한곳이라도 있을경우 
+      // if(!txtName && !txtPhone && !txtEmail){
+      if (!txtName.value || !txtPhone.value || !txtEmail.value) {
+        // 경고알람
+        const alertDiv = /*HTML*/ `
+        <div class="alert alert-primary alert-dismissible my-2" role="alert" id="liveAlert">
+          <strong>미기입 항목</strong>이 있습니다! 작성해주세요
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+          `;
+
+        //알람을 띄어주기위하여
+        form.insertAdjacentHTML("afterend", alertDiv);
+
+        return;
+      }
+
+      // 정상적으로 입력이 된 경우
+      // 테이블을 추가한다.
+      // let rows = table.rows.length;
+      // console.log(rows);
+      const tr = /*HTML*/ `
+        <tr>
+          <td>#${rows.length}</td>
+          <td>${txtName.value}</td>
+          <td>${txtPhone.value}</td>
+          <td>${txtEmail.value}</td>
+          <td><button id="rmov-btn" type="button" class="btn btn-secondary remove">삭제</button></td>
+        </tr>
+        `;
+
+      list.insertAdjacentHTML("afterbegin", tr)
+
+      form.reset();
+    }
+
+    // 삭제 이벤트 함수
+    function remove(event) {
+      if (event.target.className.includes("remove")) {
+        const reMove = event.target.parentNode;
+        // remove = 여길 지운다 parentNode = 의 부모
+        // = 여기의 부모를 지운다.
+        // 
+        const list = reMove.parentNode
+        
+        list.remove();
+      }
+    }
+  </script>
+
+</body>
+
+</html>

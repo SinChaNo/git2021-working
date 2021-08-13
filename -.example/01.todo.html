@@ -23,43 +23,75 @@
       integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
     </script>
 
-  <form class="d-flex" onsubmit="return false;">
+  <form id ="form-input" class="d-flex" onsubmit="return false;">
     <!-- 입력 에시를 보여줌 -->
     <input id="txt-memo" type="text" class="form-control me-1" placeholder="할 일...">
     <button id="btn-add" type="button" class="btn btn-primary text-nowrap" >추가</button>
   </form>
-  <ul class="list-group list-group-flush mt-4">
-    <li class="list-group-item">An item
-      <button class="btn btn-outline-dark btn-sm">삭제</button>
-    </li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-    <li class="list-group-item">A fourth item</li>
-    <li class="list-group-item">And a fifth one</li>
+  <ul id="ulList" class="list-group list-group-flush mt-4">
+    
   </ul>
   <script>
     // 요소 선택
     const txtMemo = document.querySelector("#txt-memo");
     const btnAdd = document.querySelector("#btn-add");
+    const ulList = document.querySelector("#list");
+    const formInput = document.querySelector("#form-input")
+
+    
+
     // 입력박스에 키보드 이벤트
     txtMemo.addEventListener("keyup", add)
 
     // 추가 이벤트 함수
     function add(event) {
       if (event.keyCode == 13){
-        console.log("엔터를 입력했습니다.");
+        text.txtMemo.blur();
         add(event);
       } 
     }
 
     // 버튼에 이벤트 추가
     btnAdd.addEventListener("click", add);
+    // Ul태그에 이벤트 추가
+    ulList.addEventListener("click", remove);
 
-    // 추가 이벤트 함수
+    // 목록 추가 이벤트 함수
     function add(event) {
-      console.log(event);
-      console.log(event.target);
+      // console.log(event);
+      // console.log(event.target);
       console.log(txtMemo.value);
+      if(!txtMemo.value){
+        const alertDiv = /*html*/`
+        <div class="alert alert-danger alert-dismissible my-2" role="alert" id="liveAlert">
+          입력값을 입력해주세요. 
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        `;
+        formInput.insertAdjacentHTML("afterend", alertDiv);
+
+        return;
+      }
+
+      const li = /*html*/`
+      <li class = "list-group-item">
+        <button class = "btn btn-outline-dark btn-sm">삭제</button>
+        ${txtMemo.value}
+      </li>
+      `
+
+      // ul요소에 추가
+      ulList.insertAdjacentHTML("afterbegin", li);
+
+      // from 내부 요소의 입력값을 초기화
+      formInput.reset();
+
+    }
+
+    function remove(event) {
+      if(event.target.className.includes("remove")){
+
+      }
     }
 
 
