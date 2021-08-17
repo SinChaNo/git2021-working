@@ -1,0 +1,20 @@
+<html>
+
+<body>
+
+  <script>
+    setTimeout(() =>{
+    // localStorage.setItem(키, 값);
+    // key/값 은 항상 문자열 또는 문자열로 변환 가능가능한 값
+    
+    // 저장하면 사용자가 저장공간을 삭제할 떄 까지 남아있음
+    const name = localStorage.setItem("name", "John");
+    localStorage.setItem("name", "John");
+    console.log(name);
+    
+    }, 3000);
+    
+  </script>
+</body>
+
+</html>

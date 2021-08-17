@@ -1,0 +1,27 @@
+<html>
+
+<body>
+  <textarea id="textarea" placeholder="텍스트 입력"></textarea>
+  <!-- <button id="clear" onclick= "localStorage.removeItem('keyup');">Clear</button> -->
+  <button id="clear">Clear</button>
+  <script>
+    const text = document.querySelector("textarea");
+    const btn = document.querySelector("button");
+    const storageKey = "memo";
+
+    
+    textarea.addEventListener("keyup", () => {
+      // 로컬 스토리지에 저장
+      localStorage.setItem(storageKey, text.value);
+      console.log(text);
+    });
+
+    btn.addEventListener("click", () => {
+      text.value = "";
+      localStorage.removeItem(storageKey);
+    })
+
+  </script>
+</body>
+
+</html>
