@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <style type="text/css">
+    @font-face {
+      font-family: 'BMEuljiro10yearslater';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/BMEuljiro10yearslater.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Pretendard-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    h1 {
+      font-family: 'BMEuljiro10yearslater';
+    }
+
+    body {
+      font-family: 'Pretendard-Regular';
+    }
+  </style>
+  <title>Feed</title>
+</head>
+
+<body style=" width: 600px;" class="mx-auto">
+  <h1 class=""><svg xmlns="http://www.w3.org/2000/svg" width="70" height="30" fill="currentColor" class="bi bi-camera"
+      viewBox="0 0 12 16">
+      <path
+        d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
+      <path
+        d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+    </svg>ChanStarGram</h1>
+  <div class="form-floating">
+    <textarea class="form-control" placeholder="Leave a comment here" id="text-area" style="height: 150px"></textarea>
+    <label for="floatingTextarea2">내용</label>
+  </div>
+  <div class="input-group">
+    <input type="file" class="form-control" id="img-input" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+    <button class="btn btn-outline-primary" type="button" id="add-btn">게시하기</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
+  </script>
+  <div id="post">
+
+  </div>
+  <script>
+    const textArea = document.querySelector('#text-area');
+    const imgInput = document.querySelector("input[type='file']");
+    const addBtn = document.querySelector('#add-btn');
+    const postBody = document.querySelector('#post');
+    const cardBody = document.body;
+
+    addBtn.addEventListener('click', addPost);
+
+
+    function addPost(event) {
+      //미디어 추가
+      const file = imgInput.files[0];
+
+      // 글도 없고 파일도 없을때 경고 실행
+      if (!textArea.value && !file) {
+        // 경고알람
+        const alertDiv = /*HTML*/ `
+        <div class="alert alert-danger d-flex align-items-center alert-dismissible" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        <div>
+        <strong>미기입 항목</strong>이 있습니다! 작성해주세요
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+          `;
+
+        //알람을 띄어주기위하여
+        textArea.insertAdjacentHTML('afterend', alertDiv);
+        // alert('경고');
+
+        return;
+      } 
+      // 파일이 없을시
+      // 미디어가 없을 시 
+      else if (!file) {
+        //글 만추가
+        post = /*HTML*/ `
+        <div id="card" class="card mt-3" style="">
+          <img src= '' class="card-img-top" alt="">
+          <div class="card-body">
+            <!-- <h5 class="card-title">Card title</h5> -->
+            <p class="card-text ">${textArea.value}</p>
+            <button class="btn btn-primary remove btn-sm" id = "remove-btn">삭제하기</button>
+          </div>
+        </div>`
+        postBody.insertAdjacentHTML("afterend", post)
+
+        textArea.value = '';
+        imgInput.value = '';
+
+      }
+
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        const dataUrl = reader.result;
+
+        let post = '';
+        //이미지일시 
+        if (file.type.includes("image")) {
+          post = /*HTML*/ `
+          <div id="card" class="card mt-3" style="">
+            <img src= ${dataUrl} class="card-img-top" alt="">
+            <div class="card-body">
+              <!-- <h5 class="card-title">Card title</h5> -->
+              <p class="card-text ">${textArea.value}</p>
+              <button class="btn btn-primary remove btn-sm" id = "remove-btn">삭제하기</button>
+            </div>
+          </div>`;
+        } else /*영상일시*/ {
+          post = /*HTML*/ `
+          <div id="card" class="card mt-3" style="">
+            <video width="600" controls>
+              <source src=${dataUrl} type="video/mp4"></source>
+            </video>
+            <div class="card-body">
+              <!-- <h5 class="card-title">Card title</h5> -->
+              <p class="card-text ">${textArea.value}</p>
+              <button class="btn btn-primary remove btn-sm" id = "remove-btn">삭제하기</button>
+            </div>
+          </div>`
+          }
+
+        postBody.insertAdjacentHTML("afterend", post)
+
+        textArea.value = '';
+        imgInput.value = '';
+
+      }
+
+
+
+    }
+    
+    cardBody.addEventListener('click', removeCard);
+
+    function removeCard(event) {
+      if (event.target.className.includes("remove")) {
+        const remove = event.target.parentNode;
+        // remove = 여길 지운다 parentNode = 의 부모
+        // = 여기의 부모를 지운다.
+        // 
+        const target = remove.parentNode
+
+        target.remove();
+      }
+    }
+  </script>
+</body>
+
+</html>
