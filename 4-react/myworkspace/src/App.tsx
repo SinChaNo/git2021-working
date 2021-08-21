@@ -40,12 +40,15 @@
 // JS함수인데, JSX Element를 반환함 == Component
 */
 
-
 import Header from "./components/Header";
 import Button from "./components/Button";
 import Counter from "./components/Counter";
 import Calculator from "./components/Calculator";
 import Generator from "./components/Generator";
+import AccountManager from "./components/AccountManager";
+import Hello from "./components/Hello";
+import CalculatorRef from "./components/CalculatorRef";
+import AccountManagerRef from "./components/AccountManagerRef";
 
 function App() {
   return (
@@ -67,9 +70,13 @@ function App() {
       <Button color = {"white"} backgroundColor = {"blue"} text = {"edit"} /> */}
       <Button variant = {"primary"} text = {"Done"}/>
 
-      <Counter></Counter>
-      <Calculator></Calculator>
-      <Generator></Generator>
+      <Counter />
+      <Calculator />
+      <CalculatorRef />
+      <Generator />
+      <AccountManager />
+      <AccountManagerRef />
+      <Hello />
     </div>
   );
 }
