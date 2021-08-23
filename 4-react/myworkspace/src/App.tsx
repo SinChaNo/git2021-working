@@ -42,20 +42,9 @@ import "./App.scss"
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Home from "./components/Home";
-import Navigation from "./components/Navigation";
 
-const Counter = lazy(() => import("./components/Counter"));
-const Calculator = lazy(() => import("./components/Calculator"));
-const Generator = lazy(() => import("./components/Generator"));
-const AccountManager = lazy(() => import("./components/AccountManager"));
-const Hello = lazy(() => import("./components/Hello"));
-const CalculatorRef = lazy(() => import("./components/CalculatorRef"));
-const AccountManagerRef = lazy(() => import("./components/AccountManagerRef"));
-const Components = lazy(() => import("./components/Componenets"));
-const BootStrap = lazy(() => import("./components/Bootstrap"));
-const Todo = lazy(() => import("./components/Todo"))
-// import Feed from "./components/Feed";
-const Feed = lazy(() => import("./components/Feed"))
+const Todo = lazy(() => import("./components/Todo"));
+const Feed = lazy(() => import("./components/Feed"));
 
 
 
@@ -65,18 +54,15 @@ function App() {
       {/* // main container */}
       <div style={{width: "800px", height: "100vh", marginTop:"20px"}} className="mx-auto">
         <nav style={{width: "200px"}} className="position-fixed">
-        <Navigation />  
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/todo">Todo</Link></li>
+          <li><Link to="/Feed">Feed</Link></li>
+        </ul>
         </nav>
         <main style={{marginLeft:"200px"}}>
           <Suspense fallback={<div>Loding...</div>}>
             <Switch>
-              <Route path="/" component={Home} exact />
-              <Route path="/components" component={Components} />
-              <Route path="/counter" component={Counter} />
-              <Route path="/claculator" component={Calculator} />
-              <Route path="/generator" component={Generator} />
-              <Route path="/account-manager" component={AccountManager} />
-              <Route path="/bootstrap" component={BootStrap} />
               <Route path="/todo" component={Todo} />
               <Route path="/Feed" component={Feed} />
             </Switch>

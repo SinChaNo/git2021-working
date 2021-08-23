@@ -166,7 +166,7 @@ const Feed = () => {
                   className="card-img-top"
                 />
                 ) : (
-                  <video className="card mt-3" key ={item.id}>
+                  <video className="card mt-3" key ={item.id} controls>
                     <source src={item.dataUrl} type="video/mp4"></source>
                   </video>
                 ))
