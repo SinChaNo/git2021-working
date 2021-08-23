@@ -11,6 +11,7 @@ const Navigation = () => {
       <li><Link to="/account-manager">AccountManager</Link></li>
       <li><Link to="/bootstrap">BootStrap</Link></li>
       <li><Link to="/todo">Todo</Link></li>
+      <li><Link to="/Feed">Feed</Link></li>
     </ul>
   )
 }

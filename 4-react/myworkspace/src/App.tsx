@@ -54,6 +54,8 @@ const AccountManagerRef = lazy(() => import("./components/AccountManagerRef"));
 const Components = lazy(() => import("./components/Componenets"));
 const BootStrap = lazy(() => import("./components/Bootstrap"));
 const Todo = lazy(() => import("./components/Todo"))
+// import Feed from "./components/Feed";
+const Feed = lazy(() => import("./components/Feed"))
 
 
 
@@ -61,7 +63,7 @@ function App() {
   return (
     <Router>
       {/* // main container */}
-      <div style={{width: "700px", height: "100vh", marginTop:"20px"}} className="mx-auto">
+      <div style={{width: "800px", height: "100vh", marginTop:"20px"}} className="mx-auto">
         <nav style={{width: "200px"}} className="position-fixed">
         <Navigation />  
         </nav>
@@ -76,6 +78,7 @@ function App() {
               <Route path="/account-manager" component={AccountManager} />
               <Route path="/bootstrap" component={BootStrap} />
               <Route path="/todo" component={Todo} />
+              <Route path="/Feed" component={Feed} />
             </Switch>
           </Suspense>
         </main>
