@@ -53,6 +53,7 @@ const CalculatorRef = lazy(() => import("./components/CalculatorRef"));
 const AccountManagerRef = lazy(() => import("./components/AccountManagerRef"));
 const Components = lazy(() => import("./components/Componenets"));
 const BootStrap = lazy(() => import("./components/Bootstrap"));
+const Todo = lazy(() => import("./components/Todo"))
 
 
 
@@ -74,6 +75,7 @@ function App() {
               <Route path="/generator" component={Generator} />
               <Route path="/account-manager" component={AccountManager} />
               <Route path="/bootstrap" component={BootStrap} />
+              <Route path="/todo" component={Todo} />
             </Switch>
           </Suspense>
         </main>
