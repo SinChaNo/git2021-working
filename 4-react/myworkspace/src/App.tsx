@@ -1,4 +1,3 @@
-
 /*
 // JSX: Javascript 기반의 HTML 태그 형식
 // 각각의 태그(element)들은 javascript 객체임
@@ -6,16 +5,16 @@
 
 // JSX Element
 // const element = (
-//   <h1 className="greeting">
-//     Hellom world!
-//   </h1>
+// <h1 className="greeting">
+  // Hellom world!
+  // </h1>
 // );
 
 // 실제 컴파일되는 결과
 // const element = React.createElement(
-//    'h1', //태그 종류
-//    {className: 'greeting'}, //속성
-//    'Hellom world' //컨텐트
+// 'h1', //태그 종류
+// {className: 'greeting'}, //속성
+// 'Hellom world' //컨텐트
 // );
 
 // React.createElement("div", ...)
@@ -39,45 +38,47 @@
 // JSX Element를 반환함
 // JS함수인데, JSX Element를 반환함 == Component
 */
+import "./App.scss"
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import Home from "./components/Home";
+import Navigation from "./components/Navigation";
 
-import Header from "./components/Header";
-import Button from "./components/Button";
-import Counter from "./components/Counter";
-import Calculator from "./components/Calculator";
-import Generator from "./components/Generator";
-import AccountManager from "./components/AccountManager";
-import Hello from "./components/Hello";
-import CalculatorRef from "./components/CalculatorRef";
-import AccountManagerRef from "./components/AccountManagerRef";
+const Counter = lazy(() => import("./components/Counter"));
+const Calculator = lazy(() => import("./components/Calculator"));
+const Generator = lazy(() => import("./components/Generator"));
+const AccountManager = lazy(() => import("./components/AccountManager"));
+const Hello = lazy(() => import("./components/Hello"));
+const CalculatorRef = lazy(() => import("./components/CalculatorRef"));
+const AccountManagerRef = lazy(() => import("./components/AccountManagerRef"));
+const Components = lazy(() => import("./components/Componenets"));
+const BootStrap = lazy(() => import("./components/Bootstrap"));
+
+
 
 function App() {
   return (
-    // main container
-    <div style ={{width: "500px", margin: "0 auto"}}>
-      {/* JSX 내부에서 주석 달기 */}
-      <h1 style={{color: "royalblue"}}>Hello Reac With Typescript!</h1>
-      {/* 컴포넌트에 속성으로 color, title을 받고 넘김 */}
-      
-      {/* 속성값을 변경하여 재사용하는 컴포넌트 */}
-      {/* COmponent의 속성(prop)을 넘김 */}
-      {/* 속성명={속성값} */}
-      <Header color = {"red"} title = {"React"}/>
-      <Header color = {"blue"} title = {"Typescript"}/>
-      <Header color = {"green"} title = {"Function Component"}/>
-
-      {/* <Button color = {"white"} backgroundColor = {"green"} text = {"add"} />
-      <Button color = {"white"} backgroundColor = {"red"} text = {"delete"} />
-      <Button color = {"white"} backgroundColor = {"blue"} text = {"edit"} /> */}
-      <Button variant = {"primary"} text = {"Done"}/>
-
-      <Counter />
-      <Calculator />
-      <CalculatorRef />
-      <Generator />
-      <AccountManager />
-      <AccountManagerRef />
-      <Hello />
-    </div>
+    <Router>
+      {/* // main container */}
+      <div style={{width: "700px", height: "100vh", marginTop:"20px"}} className="mx-auto">
+        <nav style={{width: "200px"}} className="position-fixed">
+        <Navigation />  
+        </nav>
+        <main style={{marginLeft:"200px"}}>
+          <Suspense fallback={<div>Loding...</div>}>
+            <Switch>
+              <Route path="/" component={Home} exact />
+              <Route path="/components" component={Components} />
+              <Route path="/counter" component={Counter} />
+              <Route path="/claculator" component={Calculator} />
+              <Route path="/generator" component={Generator} />
+              <Route path="/account-manager" component={AccountManager} />
+              <Route path="/bootstrap" component={BootStrap} />
+            </Switch>
+          </Suspense>
+        </main>
+      </div>
+    </Router>
   );
 }
 
