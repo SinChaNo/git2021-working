@@ -68,7 +68,7 @@ const Feed = () => {
       if (e.code !== "Enter") return;
     }
 
-    if (!textRef.current?.value){
+    if (!textRef.current?.value && !fileRef.current?.value){
       setIsError(true);
       return;
     }else {setIsError(false);}
