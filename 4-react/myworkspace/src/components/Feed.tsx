@@ -139,7 +139,7 @@ const Feed = () => {
             className="form-control w-100"
             placeholder="Leave a comment here" 
             id="floatingTextarea"
-            style ={{height:"100px"}}
+            style ={{height:"100px", boxSizing: "border-box"}}
             ref ={textRef}
           >
           </textarea>
