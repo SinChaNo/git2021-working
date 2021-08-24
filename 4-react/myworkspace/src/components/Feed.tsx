@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import produce, { Immer } from "immer";
 
 interface FeedState {
   id: number;
@@ -58,7 +59,14 @@ const Feed = () => {
       dataUrl: dataUrl,
       fileType: fileType, 
     };
-    setFeedList([feed, ...feedList]);
+    // setFeedList([feed, ...feedList]);
+    
+    //current state = > draft state 
+    setFeedList(
+      produce((draft) => {
+        draft.unshift(feed);
+      })
+    );
     formRef.current?.reset();
     setIsError(false);
   }
@@ -88,8 +96,22 @@ const Feed = () => {
   };
 
 
-  const del = (id : number) => {
-    setFeedList(feedList.filter(itme => itme.id !== id));
+  const del = (id : number, index: number) => {
+    // setFeedList(feedList.filter(itme => itme.id !== id));
+    // setFeedList(
+    //   produce((draft) => {
+    //     const item = draft.find((item) => item.id === id);
+    //     if (item) {
+    //       draft.splice(draft.indexOf(item), 1)
+    //     }
+    //   })
+    // )
+
+    setFeedList(
+      produce((draft) => {
+        draft.splice(index, 1);
+      })
+    )
   };
 
   return (
@@ -157,7 +179,7 @@ const Feed = () => {
       )}
       <div id = "feed-list">
         {
-          feedList.map((item) =>(
+          feedList.map((item, index) =>(
             <div id="card" className="card mt-3" key ={item.id}>
               {item.fileType &&
                 (item.fileType?.includes("image") ? (
@@ -180,7 +202,7 @@ const Feed = () => {
                     href="#!" 
                     className="link-secondary fs-6 text-nowrap position-absolute bottom-0 end-0" style={{textDecoration: "none"}}
                     onClick = { () => {
-                      del(item.id);
+                      del(item.id, index);
                     }}
                   >
                   삭제하기
