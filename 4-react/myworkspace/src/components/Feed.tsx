@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import produce, { Immer } from "immer";
+import produce from "immer";
 
 interface FeedState {
   id: number;
@@ -186,6 +186,7 @@ const Feed = () => {
                 <img
                   src={item.dataUrl}
                   className="card-img-top"
+                  alt =""
                 />
                 ) : (
                   <video className="card mt-3" key ={item.id} controls>
