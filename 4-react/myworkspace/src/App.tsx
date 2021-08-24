@@ -63,6 +63,7 @@ function App() {
         <main style={{marginLeft:"200px"}}>
           <Suspense fallback={<div>Loding...</div>}>
             <Switch>
+              <Route path="/" component= {Home} exact />
               <Route path="/todo" component={Todo} />
               <Route path="/Feed" component={Feed} />
             </Switch>
