@@ -178,7 +178,7 @@ const Feed = () => {
                   </span>
                   <a 
                     href="#!" 
-                    className="position-absolute bottom-0 end-0" style={{textDecoration: "none"}}
+                    className="link-secondary fs-6 text-nowrap position-absolute bottom-0 end-0" style={{textDecoration: "none"}}
                     onClick = { () => {
                       del(item.id);
                     }}
