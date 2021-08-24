@@ -9,7 +9,7 @@ interface FeedState {
   dataUrl?: string | undefined;
 }
 interface AlertProp {
-  onClose?: () => void
+  onClose?: () => void;
 }
 
 
