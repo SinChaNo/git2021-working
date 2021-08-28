@@ -1,0 +1,26 @@
+@import "../../styles/app-variable.scss";
+
+$thumb-size: 24px;
+$profile-image-size: 100px;
+
+.thumb {
+  width: $thumb-size;
+  height: $thumb-size;
+  margin-top: calc((#{$app-bar-height} - #{$thumb-size}) / 2);
+  background-color: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.username {
+  line-height: $app-bar-height;
+}
+
+.thumb-large {
+  width: $profile-image-size;
+  height: $profile-image-size;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

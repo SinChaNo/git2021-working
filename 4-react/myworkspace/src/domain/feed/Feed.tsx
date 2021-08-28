@@ -1,14 +1,7 @@
 import { useRef, useState } from "react";
 import produce from "immer";
-
-interface FeedState {
-  id: number;
-  commit: string | undefined;
-  createTime: number;
-  modifyTime?: number;
-  fileType?: string | undefined;
-  dataUrl?: string | undefined;
-}
+import FeedEditModal from "./FeedEditmodal";
+import { FeedState } from "../type"
 interface AlertProp {
   onClose?: () => void;
 }
@@ -44,8 +37,18 @@ const Feed = () => {
     {id: 2, commit: "틀어", createTime: new Date().getTime()},
     {id: 1, commit: "아무거나", createTime: new Date().getDate()},
   ]);
-
+  
+  
+  const editItem = useRef<FeedState>(
+    {
+      id: 0, 
+      commit: "", 
+      createTime: 0,
+      fileType: "",
+      dataUrl: "",
+    })
   const [isError, setIsError] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const textRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -114,6 +117,25 @@ const Feed = () => {
     )
   };
 
+  const edit = (item: FeedState) =>{
+    editItem.current = item;
+    setIsEdit(true);
+  };
+
+  const save = (editItem: FeedState) => {
+    setFeedList(
+      produce((draft) => {
+        const item = draft.find((item) => item.id === editItem.id);
+        if (item) {
+          item.dataUrl = editItem.dataUrl;
+          item.fileType = editItem.fileType;
+          item.commit = editItem.commit;
+        }
+      })
+    )
+    setIsEdit(false);
+  };
+
   return (
     <>
       <h1>
@@ -133,6 +155,17 @@ const Feed = () => {
         /></svg>
       ChanHo_Feed  
       </h1>
+      {isEdit && (
+        <FeedEditModal
+          item = {editItem.current}
+          onClose = {() => {
+            setIsEdit(false)
+          }}
+          onSave={(editItem) => {
+            save(editItem);
+          }}
+        />
+      )}
       <form className ="w-100" ref={formRef} onSubmit = {e => e.preventDefault()}>
         <div className="form-floating ">
           <textarea 
@@ -201,8 +234,27 @@ const Feed = () => {
                   </span>
                   <a 
                     href="#!" 
-                    className="link-secondary fs-6 text-nowrap position-absolute bottom-0 end-0" style={{textDecoration: "none"}}
+                    className="link-secondary fs-6 text-nowrap position-absolute bottom-1 end-0" style={{textDecoration: "none"}}
                     onClick = { () => {
+                      edit(item);
+                    }}
+                  >
+                  수정하기
+                  </a>
+                  <a 
+                    href="#!" 
+                    className="link-secondary fs-6 text-nowrap position-absolute bottom-0 end-0" style={{textDecoration: "none"}}
+                    onClick = { (e) => {
+                      e.preventDefault();
+                      del(item.id, index);
+                    }}
+                  >
+                  삭제하기
+                  </a>
+                  <a 
+                    href="#!"
+                    className="link-secondary fs-6 text-nowrap position-absolute bottom-0 end-0" style={{textDecoration: "none"}}
+                    onClick = { (e) => {
                       del(item.id, index);
                     }}
                   >

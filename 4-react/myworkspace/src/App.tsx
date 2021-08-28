@@ -1,50 +1,12 @@
-/*
-// JSX: Javascript 기반의 HTML 태그 형식
-// 각각의 태그(element)들은 javascript 객체임
-// 일반적인 html 태그 표기법과 다름
-
-// JSX Element
-// const element = (
-// <h1 className="greeting">
-  // Hellom world!
-  // </h1>
-// );
-
-// 실제 컴파일되는 결과
-// const element = React.createElement(
-// 'h1', //태그 종류
-// {className: 'greeting'}, //속성
-// 'Hellom world' //컨텐트
-// );
-
-// React.createElement("div", ...)
-// 가상 DOM을 생성함
-// 가상 DOM == javascript 객체
-// 내부적으로 가상DOM tree를 관리함
-
-// 렌더링(rendering): 화면에 그리기
-// 가상DOM을 생성하고 렌더링 시점(event loop)에 가상DOM을 HTML DOM으로 그림
-
-// 일반DOM
-// DOM을 조작할 때마다 rendering함, 성능 저하
-
-// 가상DOM
-// 렌더링 주기에 따라서 변동사항만 렌더링함
-
-// react 관련 자료는 2020년 이후 것으로만
-
-// Function Component
-// 대문자로 시작함
-// JSX Element를 반환함
-// JS함수인데, JSX Element를 반환함 == Component
-*/
 import "./App.scss"
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import Home from "./components/Home";
+import Home from "./domain/Home";
+import Profile from "./domain/profile/Profile";
 
-const Todo = lazy(() => import("./components/Todo"));
-const Feed = lazy(() => import("./components/Feed"));
+const Todo = lazy(() => import("./domain/Todo"));
+const Feed = lazy(() => import("./domain/feed/Feed"));
+const Contact = lazy(() => import("./domain/Contact"))
 
 
 
@@ -52,20 +14,28 @@ function App() {
   return (
     <Router>
       {/* // main container */}
-      <div style={{width: "800px", height: "100vh", marginTop:"20px"}} className="mx-auto">
-        <nav style={{width: "200px"}} className="position-fixed">
+      <div className="mx-auto">
+        <header className="app-bar d-flex justify-content-end bg-primary shadow">
+          <Profile />
+        </header>
+        <nav
+          className="drawer-menu position-fixed bg-light shadow-sm"
+        >
+        <h3 className="m-2">MY WORKSPACE</h3>
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/todo">Todo</Link></li>
-          <li><Link to="/Feed">Feed</Link></li>
+          <li><Link to="/feed">Feed</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
         </ul>
         </nav>
-        <main style={{marginLeft:"200px"}}>
+        <main className="content-container">
           <Suspense fallback={<div>Loding...</div>}>
             <Switch>
               <Route path="/" component= {Home} exact />
               <Route path="/todo" component={Todo} />
-              <Route path="/Feed" component={Feed} />
+              <Route path="/feed" component={Feed} />
+              <Route path="/contact" component={Contact} />
             </Switch>
           </Suspense>
         </main>

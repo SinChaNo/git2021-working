@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import Alert from "./Alert";
+import Alert from "../components/Alert";
 
 // 1건에 대한 타입
 interface TodoState {
@@ -17,6 +17,28 @@ const getTimeString = (unixtime: number) => {
   return `${dateTime.toLocaleDateString()} ${dateTime.toLocaleTimeString()}`;
 };
 
+const TodoEditModal = () => {
+  return (
+    <div className="modal d-block">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Modal title</h5>
+            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div className="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" className="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const Todo = () => {
   // todo 여러건에 대한 state
   // 참고) new Date().getTime() -> unix time 생성됨
@@ -24,6 +46,8 @@ const Todo = () => {
     { id: 2, memo: "Typescript", createTime: new Date().getTime() },
     { id: 1, memo: "React State 연습", createTime: new Date().getTime() },
   ]);
+
+  const [isEdite, setisEdit] = useState(false);
 
   // 빈 값 여부 state
   const [isError, setIsError] = useState(false);
@@ -65,6 +89,7 @@ const Todo = () => {
     // filter 함수로 해당 id를 제외하고 새로운 배열로 리턴함.
     setTodoList(todoList.filter((item) => item.id !== id));
   };
+  
 
   const edit = (id: number, mod: boolean) => {
     // 해당 id에 해당하는 item만 edit 모드로 변경함
