@@ -20,6 +20,7 @@ const Contact = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
   const trRef = useRef<HTMLTableRowElement>(null);
+  const tbodyRef = useRef<HTMLTableSectionElement>(null);
 
   const add = () => {
     if (!nameRef.current?.value || !phoneRef.current?.value || !emailRef.current?.value){
@@ -65,9 +66,9 @@ const Contact = () => {
   }
 
   const save = (id: number, index: number) => {
-    const input1 = tableRef.current?.querySelectorAll("input")[3 * index];
-    const input2 = tableRef.current?.querySelectorAll("input")[3 * index + 1];
-    const input3 = tableRef.current?.querySelectorAll("input")[3 * index + 2];
+    const input1 = tbodyRef.current?.querySelectorAll("tr")[index].querySelector("input");
+    const input2 = tbodyRef.current?.querySelectorAll("tr")[index + 2].querySelector("input");
+    const input3 = tbodyRef.current?.querySelectorAll("tr")[index + 3].querySelector("input");
     setContactList(
       produce((draft) => {
         const item = draft.find((item) => item.id === id);
@@ -118,7 +119,7 @@ const Contact = () => {
             <th>작업</th>
           </tr>
         </thead>
-        <tbody id="contactList">
+        <tbody id="contactList" ref = {tbodyRef}>
           {/* 컨텐츠 만드는 곳 */}
           {contactList.map((item, index) =>  (
             <tr key = {item.id} ref = {trRef}>
