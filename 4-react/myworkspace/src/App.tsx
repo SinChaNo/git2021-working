@@ -6,7 +6,7 @@ import Profile from "./domain/profile/Profile";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
-const Todo = lazy(() => import("./domain/Todo"));
+const Todo = lazy(() => import("./domain/todo/Todo"));
 const Feed = lazy(() => import("./domain/feed/Feed"));
 const Contact = lazy(() => import("./domain/Contact"))
 

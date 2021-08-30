@@ -8,9 +8,12 @@
 // global state: profile, todo, contact ... 여러개 state가 있음
 // ** 이러한 state드은 다른 컴포넌트와 state가 공유됨
 import { configureStore } from "@reduxjs/toolkit";
+import profileReducer from "../domain/profile/profileSlice";
 
 export const store = configureStore({
-  reducer: {}, // 각, state 별로 처리할 외부 reducer 목록
+  reducer: {
+    profile: profileReducer,
+  }, // 각, state 별로 처리할 외부 reducer 목록
   devTools: true, // 개발툴 사용 여부
 });
 

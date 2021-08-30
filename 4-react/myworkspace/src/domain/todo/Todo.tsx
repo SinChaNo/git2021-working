@@ -1,56 +1,51 @@
 import { useRef, useState } from "react";
-import Alert from "../components/Alert";
+import Alert from "../../components/Alert";
+import { useSelector } from "react-redux";
+import { TodoState } from "../type"
+import { RootState } from "../../store";
+import produce from "immer";
 
 // 1건에 대한 타입
-interface TodoState {
-  id: number;
-  memo: string | undefined;
-  createTime: number;
-  modifyTime?: number;
-  isEdit?: boolean; // 수정모드인지 여부
-}
+
 
 const getTimeString = (unixtime: number) => {
-  // Locale: timezone, currency 등
-  // js에서는 브라우저의 정보를 이용함
+  // 1 sec: 1000
+  // 1 min: 60 * 1000
+  // 1 hous: 60 * 60 * 1000
+  // 1 dat: 24 * 60 * 60 * 1000
+
+  const day = 24 * 60 * 60 * 1000;
+
   const dateTime = new Date(unixtime);
-  return `${dateTime.toLocaleDateString()} ${dateTime.toLocaleTimeString()}`;
+
+  return unixtime - new Date().getTime() >= day
+    ? dateTime.toLocaleDateString()
+    : dateTime.toLocaleTimeString();
 };
 
-const TodoEditModal = () => {
-  return (
-    <div className="modal d-block">
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Modal title</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div className="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 const Todo = () => {
+  // profile state 를 가져옴 + state가 변경되면 컴포넌트를 업데이트 함
+  const profile = useSelector((state: RootState) => state.profile)
   // todo 여러건에 대한 state
   // 참고) new Date().getTime() -> unix time 생성됨
   const [todoList, setTodoList] = useState<TodoState[]>([
-    { id: 2, memo: "Typescript", createTime: new Date().getTime() },
-    { id: 1, memo: "React State 연습", createTime: new Date().getTime() },
+    { 
+      id: 2, 
+      memo: "Typescript", 
+      username: profile.username,
+      createTime: new Date().getTime() 
+    },
+    { 
+      id: 1, 
+      memo: "React State 연습", 
+      username: profile.username,
+      createTime: new Date().getTime() 
+    },
   ]);
-
-  const [isEdite, setisEdit] = useState(false);
 
   // 빈 값 여부 state
   const [isError, setIsError] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -72,10 +67,15 @@ const Todo = () => {
       id: todoList.length > 0 ? todoList[0].id + 1 : 1,
       // optional chaning
       memo: inputRef.current?.value,
+      username: profile.username,
       createTime: new Date().getTime(),
     };
 
-    setTodoList([todo, ...todoList]);
+    setTodoList(
+      produce((draft) => {
+        draft.unshift(todo);
+      })
+    );
 
     // 입력값 초기화
     formRef.current?.reset();
@@ -83,27 +83,30 @@ const Todo = () => {
     setIsError(false);
   };
 
-  const del = (id: number) => {
+  const del = (id: number, index: number) => {
     // 불변성 때문에 splice를 사용할 수 없음
     // 주로 filter 함수를 사용
     // filter 함수로 해당 id를 제외하고 새로운 배열로 리턴함.
-    setTodoList(todoList.filter((item) => item.id !== id));
+    setTodoList(
+      produce((draft) => {
+        draft.splice(index, 1)
+      })
+    );
   };
-  
 
-  const edit = (id: number, mod: boolean) => {
+  const editItem = useRef<TodoState>({
+    id: 0,
+    memo: "",
+    username: profile.username,
+    createTime: 0,
+  });
+
+  const edit = (item: TodoState) => {
     // 해당 id에 해당하는 item만 edit 모드로 변경함
     // 해당 item의 속성을 변경한 후 변경된 item을 반환
     // map 함수는 새로운 배열을 반환하는 함수, 배열길이는 기존 배열 길이와 같음
-    setTodoList(
-      todoList.map((item) => {
-        if (item.id === id) {
-          item.isEdit = mod;
-        }
-
-        return item;
-      })
-    );
+    editItem.current = item;
+    setIsEdit(true);
   };
 
   const save = (id: number, index: number) => {
@@ -128,6 +131,16 @@ const Todo = () => {
   return (
     <>
       <h2 className="text-center my-5">할 일 관리</h2>
+      {/* profile 정보 확인용 */}
+      <div>
+        <img
+          src={profile.image}
+          width={150}
+          height={100}
+          alt={profile.username}
+        />
+        <span>{profile.username}</span>
+      </div>
       <form
         className="d-flex"
         ref={formRef}
@@ -178,12 +191,9 @@ const Todo = () => {
               {/* 보기모드일 때 보이는 내용 */}
               {!item.isEdit && <span className="me-1">{item.memo}</span>}
               {!item.isEdit && (
-                <span style={{ fontSize: "0.75rem" }}>
-                  -{" "}
-                  {getTimeString(
-                    item.modifyTime ? item.modifyTime : item.createTime
-                  )}
-                </span>
+              <span style={{ fontSize: "0.75rem" }}>
+                - {item.username}, {getTimeString(item.createTime)}
+              </span>
               )}
               {/* 수정모드일 때 보이는 입력폼 */}
               {item.isEdit && (
@@ -195,7 +205,7 @@ const Todo = () => {
               <button
                 className="btn btn-outline-secondary btn-sm ms-2 me-1 text-nowrap"
                 onClick={() => {
-                  edit(item.id, true);
+                  edit(item);
                 }}
               >
                 수정
@@ -205,7 +215,7 @@ const Todo = () => {
               <button
                 className="btn btn-outline-secondary btn-sm text-nowrap"
                 onClick={() => {
-                  del(item.id);
+                  del(item.id, index);
                 }}
               >
                 삭제
@@ -226,7 +236,7 @@ const Todo = () => {
               <button
                 className="btn btn-outline-secondary btn-sm text-nowrap"
                 onClick={() => {
-                  edit(item.id, false);
+                  edit(item);
                 }}
               >
                 취소

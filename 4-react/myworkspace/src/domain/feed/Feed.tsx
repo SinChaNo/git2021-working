@@ -1,19 +1,24 @@
 import { useRef, useState } from "react";
 import produce from "immer";
 import FeedEditModal from "./FeedEditmodal";
-import { FeedState } from "../type"
-interface AlertProp {
-  onClose?: () => void;
-}
+import { AlertProp1 } from "../type"
+import { FeedState } from "./FeedState";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
+import style from "../profile/Profile.module.scss"
 
 const getTimeString = (unixtime : number) => {
+  const day = 24 * 60 * 60 * 1000;
+
   const dateTime = new Date(unixtime);
 
-  return ` ${dateTime.toLocaleTimeString()}`;
-}
+  return unixtime - new Date().getTime() >= day
+    ? dateTime.toLocaleDateString()
+    : dateTime.toLocaleTimeString();
+};
 
-const Alert = ({onClose}: AlertProp) =>{
+const Alert = ({onClose}: AlertProp1) =>{
   
   return (
     <div className="alert alert-danger d-flex align-items-center alert-dismissible" role="alert">
@@ -33,20 +38,25 @@ const Alert = ({onClose}: AlertProp) =>{
 }
 
 const Feed = () => {
+  const profile = useSelector((state: RootState) => state.profile);
+
   const [feedList, setFeedList] = useState<FeedState[]>([
-    {id: 2, commit: "틀어", createTime: new Date().getTime()},
-    {id: 1, commit: "아무거나", createTime: new Date().getDate()},
+    {
+      id: 2, 
+      commit: "틀어", 
+      createTime: new Date().getTime(),
+      username: profile.username,
+      profileImg: profile.image,
+    },
+    {
+      id: 1, 
+      commit: "아무거나", 
+      createTime: new Date().getDate(),
+      username: profile.username,
+      profileImg: profile.image,
+    },
   ]);
   
-  
-  const editItem = useRef<FeedState>(
-    {
-      id: 0, 
-      commit: "", 
-      createTime: 0,
-      fileType: "",
-      dataUrl: "",
-    })
   const [isError, setIsError] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -58,9 +68,11 @@ const Feed = () => {
     const feed : FeedState = {
       id: feedList.length > 0 ? feedList[0].id + 1 : 1,
       commit: textRef.current?.value,
+      username: profile.username,
+      profileImg: profile.image,
       createTime: new Date().getTime(),
       dataUrl: dataUrl,
-      fileType: fileType, 
+      fileType: fileType,
     };
     // setFeedList([feed, ...feedList]);
     
@@ -117,6 +129,16 @@ const Feed = () => {
     )
   };
 
+  const editItem = useRef<FeedState>({
+    id: 0,
+    commit: "",
+    username:"",
+    createTime: 0,
+    dataUrl: "",
+    fileType: "",
+    profileImg: "",
+  })
+
   const edit = (item: FeedState) =>{
     editItem.current = item;
     setIsEdit(true);
@@ -130,6 +152,8 @@ const Feed = () => {
           item.dataUrl = editItem.dataUrl;
           item.fileType = editItem.fileType;
           item.commit = editItem.commit;
+          item.profileImg = editItem.profileImg;
+          item.username = editItem.username;
         }
       })
     )
@@ -167,6 +191,16 @@ const Feed = () => {
         />
       )}
       <form className ="w-100" ref={formRef} onSubmit = {e => e.preventDefault()}>
+        {/* profile 정보 확인용 */}
+        <div>
+          <img
+            src={profile.image}
+            width={50}
+            height={50}
+            alt={profile.username}
+          />
+          <span>{profile.username}</span>
+        </div>
         <div className="form-floating ">
           <textarea 
             className="form-control w-100"
@@ -213,7 +247,18 @@ const Feed = () => {
       <div id = "feed-list">
         {
           feedList.map((item, index) =>(
+      
             <div id="card" className="card mt-3" key ={item.id}>
+              <div className="card-header">
+                  <img
+                    src={item.profileImg}
+                    className = {`${style.thumb} me-1`}
+                    width={150}
+                    height={100}
+                    alt={item.username}
+                  />
+                  <span className = {`${style.username}`}>{item.username}</span>
+                </div>
               {item.fileType &&
                 (item.fileType?.includes("image") ? (
                 <img
@@ -229,8 +274,8 @@ const Feed = () => {
               }
                 <div className="card-body">
                   <p className="card-text ">{item.commit}</p>
-                  <span style ={{fontSize: "0.75rem"}}>
-                    - {" "}{getTimeString(item.modifyTime ? item.modifyTime : item.createTime)}
+                  <span style={{ fontSize: "0.75rem" }}>
+                    - {item.username}, {getTimeString(item.createTime)}
                   </span>
                   <a 
                     href="#!" 

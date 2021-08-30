@@ -1,5 +1,7 @@
 import { useRef } from "react";
-import { FeedState } from "../type";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { FeedState } from "./FeedState";
 
 interface ModalProp{
   item: FeedState;
@@ -8,6 +10,8 @@ interface ModalProp{
 }
 
 const FeedEditModal = ({item, onClose, onSave}: ModalProp) => {
+  const profile = useSelector((state: RootState) => state.profile);
+
   const textRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -26,6 +30,8 @@ const FeedEditModal = ({item, onClose, onSave}: ModalProp) => {
           id: item.id,
           // commit: item.commit,
           commit: textRef.current?.value,
+          username: profile.username,
+          profileImg: profile.image,
           createTime: item.createTime,
           dataUrl: dataUrl,
           fileType: fileType,
@@ -38,6 +44,8 @@ const FeedEditModal = ({item, onClose, onSave}: ModalProp) => {
       const feed: FeedState = {
         id: item.id,
         commit: textRef.current?.value,
+        username: profile.username,
+        profileImg: profile.image,
         createTime: item.createTime,
         dataUrl: item.dataUrl,
         fileType: item.fileType,

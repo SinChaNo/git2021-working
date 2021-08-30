@@ -1,19 +1,23 @@
 import { profile } from "console";
 import React, { useRef, useState } from "react";
-import { penguin, catImg, hamster } from "../../common/data";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
+import { saveProfile } from "./profileSlice";
 
 import style from "./Profile.module.scss";
 
-interface ProfileState {
-  image: string | undefined;
-  username: string | undefined;
-}
-
 const Profile = () => {
-  const [profile, setProfile] = useState<ProfileState>({
-    image: hamster,
-    username: "SinChaNo"
-  });
+  // local(component) state 
+  // const [profile, setProfile] = useState<ProfileState>({
+  //   image: hamster,
+  //   username: "SinChaNo"
+  // });
+
+  // global(redux) state
+  // root state에서 profile state를 꺼내옴
+  const profile = useSelector((state: RootState) => state.profile );
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const [isShow, setIsShow] = useState(false); // profile view details control
   const [isEdit, setIsEdit] = useState(false); // edit mode control
@@ -34,8 +38,13 @@ const Profile = () => {
     }
   };
 
-  const save = () => {
-    setProfile({image: url, username: inputRef.current?.value });
+  const handleSave = () => {
+    // setProfile({image: url, username: inputRef.current?.value });
+    // dispatch(
+      //   type: "profile/saveProfile",
+      //   paylord: { image: url, username: inputRef.current?.value }
+      // );
+    dispatch(saveProfile({ image: url, username: inputRef.current?.value }));
     setIsEdit(false);
   };
 
@@ -134,7 +143,7 @@ const Profile = () => {
                     className = "link-secondary fs-6 text-nowrap me-2"
                     onClick = {(e) => {
                       e.preventDefault();
-                      save();
+                      handleSave();
                     }}
                   >
                     save
