@@ -1,6 +1,5 @@
 import produce from "immer";
 import { useEffect, useRef, useState } from "react"
-import { ContactItem } from "./contact/ContactSlice";
 
 interface ContactState {
   id: number,
@@ -26,9 +25,10 @@ interface ContactItemResponse {
 }
 
 
-const Contact = () => {
+const ContactInline = () => {
   const [contactList, setContactList] = useState<ContactState[]>([]);
   const [isError, setIsError] = useState(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   const formRef = useRef<HTMLFormElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
@@ -38,29 +38,24 @@ const Contact = () => {
   const trRef = useRef<HTMLTableRowElement>(null);
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
 
-
-  // async: 비동기 처리
-  const fetchData = async () => {
-    // 함수를 호출하고 리턴값을 받는 것과 비슷한 구조
-    // resolve(해결함수)가 실행되기 전까지 대기
-    const res = await fetch("http://localhost:8080/contacts");
-    const data: ContactItemResponse[] = await res.json();
-
-    const contact = data.map((item) => ({
-      id : item.id,
-      name : item.name,
-      email : item.email,
-    })) as ContactState[]
-
-    setContactList(contact);
-
-    console.log("--2. fetch completed--");
-  };
-
   useEffect(() => {
     console.log("---------mounted---------");
-    //ES8 style async-await
-    fetchData();
+    fetch("http://localhost:8080/contacts")
+    .then((res) => res.json())
+    .then((data : ContactItemResponse[]) =>{
+      console.log("----2.fetch completed----");
+      console.log(data);
+      setTimeout(() => {
+        const contacts = data.map((item) => ({
+          id: item.id,
+          name: item.name,
+          phone: item.phone,
+          email: item.email,
+        }))as ContactItems[]
+        setContactList(contacts);
+        setLoading(false);
+      }, 3000);
+    })
   }, []);
 
   const add = () => {
@@ -136,7 +131,7 @@ const Contact = () => {
 
   return (
     <>
-      <h1 className ="text-center">Contact</h1>
+      <h1 className ="text-center">ContactInlineEdit</h1>
   
       <form className="d-flex" action="" ref = {formRef} >
         <input type="text" className="mx-auto px-3" placeholder="이름" id ="name" ref ={nameRef}/>
@@ -172,7 +167,16 @@ const Contact = () => {
         </thead>
         <tbody id="contactList" ref = {tbodyRef}>
           {/* 컨텐츠 만드는 곳 */}
-          {}
+          {isLoading && (
+            <li className="list-group-item text-center">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </li>
+          )}
+          {!isLoading && contactList.length === 0 && (
+            <li className ="list">데이터가 없습니다.</li>
+          )}
           {contactList.map((item, index) =>  (
             <tr key = {item.id} ref = {trRef}>
               {!item.isEdit && (
@@ -276,4 +280,4 @@ const Contact = () => {
   )
 }
 
-export default Contact;
+export default ContactInline;

@@ -8,9 +8,9 @@
 // global state: profile, todo, contact ... 여러개 state가 있음
 // ** 이러한 state드은 다른 컴포넌트와 state가 공유됨
 import { configureStore } from "@reduxjs/toolkit";
-import profileReducer from "../domain/profile/profileSlice";
-import photoReducer from "../domain/photo/photoSlice";
-import contactReducer from "../domain/contact/ContactSlice";
+import profileReducer from "../features/profile/profileSlice";
+import photoReducer from "../features/photo/photoSlice";
+import contactReducer from "../features/contact/ContactSlice";
 
 import { enableMapSet } from "immer";
 enableMapSet();

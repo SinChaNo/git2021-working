@@ -1,22 +1,23 @@
 import "./App.scss"
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import Home from "./domain/Home";
-import Profile from "./domain/profile/Profile";
+import Home from "./features/Home";
+import Profile from "./features/profile/Profile";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
-const Todo = lazy(() => import("./domain/todo/Todo"));
-const Feed = lazy(() => import("./domain/feed/Feed"));
-const Contact = lazy(() => import("./domain/Contacts"));
-const Photo = lazy(() => import("../src/domain/photo/Photo"));
-const PhotoCreate = lazy(() => import("../src/domain/photo/PhotoCreate"));
-const PhotoDetail = lazy(() => import("../src/domain/photo/PhotoDetail"));
-const PhotoEdit = lazy(() => import("../src/domain/photo/PhotoEdit"));
-const Contacts = lazy(() => import("./domain/contact/Contact"));
-const ContactCreate = lazy(() => import("../src/domain/contact/ContactCreate"));
-const ContactDetail = lazy(() => import("../src/domain/contact/ContactDetail"));
-const ContactEdit = lazy(() => import("../src/domain/contact/ContactEdit"));
+const Todo = lazy(() => import("./features/todo/Todo"));
+const Feed = lazy(() => import("./features/feed/Feed"));
+const Contact = lazy(() => import("./features/Contacts"));
+const ContactInline = lazy(() => import("./features/contact/ContactInlineEdit"));
+const Photo = lazy(() => import("./features/photo/Photo"));
+const PhotoCreate = lazy(() => import("./features/photo/PhotoCreate"));
+const PhotoDetail = lazy(() => import("./features/photo/PhotoDetail"));
+const PhotoEdit = lazy(() => import("./features/photo/PhotoEdit"));
+const Contacts = lazy(() => import("./features/contact/Contact"));
+const ContactCreate = lazy(() => import("./features/contact/ContactCreate"));
+const ContactDetail = lazy(() => import("./features/contact/ContactDetail"));
+const ContactEdit = lazy(() => import("./features/contact/ContactEdit"));
 
 
 
@@ -38,6 +39,7 @@ function App() {
             <li><Link to="/todo">Todo</Link></li>
             <li><Link to="/feed">Feed</Link></li>
             <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/contactInline">ContactInline</Link></li>
             <li><Link to="/photo">Photo</Link></li>
             <li><Link to="/contacts">newContact</Link></li>
           </ul>
@@ -49,6 +51,7 @@ function App() {
                 <Route path="/todo" component={Todo} />
                 <Route path="/feed" component={Feed} />
                 <Route path="/contact" component={Contact} exact />
+                <Route path="/contactInline" component={ContactInline} exact />
                 <Route path="/photo" component={Photo} exact />
                 <Route path="/photo/create" component={PhotoCreate} />
                 <Route path="/photo/:id" component={PhotoDetail} exact />
