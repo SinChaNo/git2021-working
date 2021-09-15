@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Alert from "../../components/Alert";
 import { useSelector } from "react-redux";
 import { TodoState } from "../type"
@@ -6,7 +6,13 @@ import { RootState } from "../../store";
 import produce from "immer";
 
 // 1건에 대한 타입
-
+interface TodoItemResponse {
+  id: number;
+  memo: string | undefined;
+  createTime: number;
+  modifyTime?: number;
+  isEdit?: boolean; // 수정모드인지 여부
+}
 
 const getTimeString = (unixtime: number) => {
   // 1 sec: 1000
@@ -29,18 +35,7 @@ const Todo = () => {
   // todo 여러건에 대한 state
   // 참고) new Date().getTime() -> unix time 생성됨
   const [todoList, setTodoList] = useState<TodoState[]>([
-    { 
-      id: 2, 
-      memo: "Typescript", 
-      username: profile.username,
-      createTime: new Date().getTime() 
-    },
-    { 
-      id: 1, 
-      memo: "React State 연습", 
-      username: profile.username,
-      createTime: new Date().getTime() 
-    },
+
   ]);
 
   // 빈 값 여부 state
@@ -50,6 +45,29 @@ const Todo = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const ulRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    // 특정조건일 때 처리되는 코드를 작성
+    // [] -> 컴포넌트 처리 후 바로 처리되는 코드
+    console.log("---mounted---");
+
+    fetch("http://localhost:8080/todos")
+      .then((res) => res.json())
+      .then((data: TodoItemResponse[]) => {
+        console.log("--2. fetch completed--")
+        console.log(data);
+        setTimeout(() => {
+          const todos = data.map(item => (
+            {
+              id : item.id, 
+              memo : item.memo, 
+              createTime: item.createTime,
+            })) as TodoState[]
+          setTodoList(todos);
+        }, 2000)
+      })
+      console.log("--3. fetch completed--")
+  }, []);
 
   const add = (e: React.KeyboardEvent<HTMLInputElement> | null) => {
     // 이벤트 객체가 있을 때는 입력박스에서 엔터 입력

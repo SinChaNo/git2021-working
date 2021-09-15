@@ -1,5 +1,6 @@
 import produce from "immer";
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { ContactItem } from "./contact/ContactSlice";
 
 interface ContactState {
   id: number,
@@ -7,6 +8,21 @@ interface ContactState {
   phone: string | undefined,
   email: string | undefined,
   isEdit: boolean;
+}
+
+interface ContactItems {
+  id: number,
+  name: string | undefined,
+  phone: string | undefined,
+  email: string | undefined,
+  isEdit: boolean;
+}
+
+interface ContactItemResponse {
+  id: number,
+  name: string | undefined,
+  phone: string | undefined,
+  email: string | undefined,
 }
 
 
@@ -21,6 +37,31 @@ const Contact = () => {
   const tableRef = useRef<HTMLTableElement>(null);
   const trRef = useRef<HTMLTableRowElement>(null);
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
+
+
+  // async: 비동기 처리
+  const fetchData = async () => {
+    // 함수를 호출하고 리턴값을 받는 것과 비슷한 구조
+    // resolve(해결함수)가 실행되기 전까지 대기
+    const res = await fetch("http://localhost:8080/contacts");
+    const data: ContactItemResponse[] = await res.json();
+
+    const contact = data.map((item) => ({
+      id : item.id,
+      name : item.name,
+      email : item.email,
+    })) as ContactState[]
+
+    setContactList(contact);
+
+    console.log("--2. fetch completed--");
+  };
+
+  useEffect(() => {
+    console.log("---------mounted---------");
+    //ES8 style async-await
+    fetchData();
+  }, []);
 
   const add = () => {
     if (!nameRef.current?.value || !phoneRef.current?.value || !emailRef.current?.value){
@@ -66,17 +107,27 @@ const Contact = () => {
   }
 
   const save = (id: number, index: number) => {
-    const input1 = tbodyRef.current?.querySelectorAll("tr")[index].querySelector("input");
-    const input2 = tbodyRef.current?.querySelectorAll("tr")[index + 2].querySelector("input");
-    const input3 = tbodyRef.current?.querySelectorAll("tr")[index + 3].querySelector("input");
+    console.log(`"index:" ${index}`);
+    console.log(tableRef.current?.querySelectorAll("tr")[index + 1]);
+    // const input1 = trRef.current?.querySelectorAll("td")[index + 1].querySelector("input");
+    // const input2 = trRef.current?.querySelectorAll("td")[index + 2].querySelector("input");
+    // const input3 = trRef.current?.querySelectorAll("td")[index + 3].querySelector("input");
+    // const input1 = tableRef.current?.querySelectorAll("tr")[index + 1].querySelectorAll("input");
+    const input = tableRef.current?.querySelectorAll("tr")[index + 1];
+    const name = input?.querySelectorAll("input")[0];
+    const phone = input?.querySelectorAll("input")[1];
+    const email = input?.querySelectorAll("input")[2];
     setContactList(
       produce((draft) => {
         const item = draft.find((item) => item.id === id);
         if (item) {
-          item.name = input1?.value;
-          item.phone = input2?.value;
-          item.email = input3?.value;
+          item.name = name?.value;
+          item.phone = phone?.value;
+          item.email = email?.value;
           item.isEdit = false;
+          console.log(name);
+          console.log(phone);
+          console.log(email);
           console.log(id, index);
         }
       })
@@ -121,6 +172,7 @@ const Contact = () => {
         </thead>
         <tbody id="contactList" ref = {tbodyRef}>
           {/* 컨텐츠 만드는 곳 */}
+          {}
           {contactList.map((item, index) =>  (
             <tr key = {item.id} ref = {trRef}>
               {!item.isEdit && (

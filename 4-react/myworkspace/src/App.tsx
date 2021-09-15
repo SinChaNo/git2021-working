@@ -8,7 +8,15 @@ import { store } from "./store";
 
 const Todo = lazy(() => import("./domain/todo/Todo"));
 const Feed = lazy(() => import("./domain/feed/Feed"));
-const Contact = lazy(() => import("./domain/Contact"))
+const Contact = lazy(() => import("./domain/Contacts"));
+const Photo = lazy(() => import("../src/domain/photo/Photo"));
+const PhotoCreate = lazy(() => import("../src/domain/photo/PhotoCreate"));
+const PhotoDetail = lazy(() => import("../src/domain/photo/PhotoDetail"));
+const PhotoEdit = lazy(() => import("../src/domain/photo/PhotoEdit"));
+const Contacts = lazy(() => import("./domain/contact/Contact"));
+const ContactCreate = lazy(() => import("../src/domain/contact/ContactCreate"));
+const ContactDetail = lazy(() => import("../src/domain/contact/ContactDetail"));
+const ContactEdit = lazy(() => import("../src/domain/contact/ContactEdit"));
 
 
 
@@ -30,6 +38,8 @@ function App() {
             <li><Link to="/todo">Todo</Link></li>
             <li><Link to="/feed">Feed</Link></li>
             <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/photo">Photo</Link></li>
+            <li><Link to="/contacts">newContact</Link></li>
           </ul>
           </nav>
           <main className="content-container">
@@ -38,7 +48,15 @@ function App() {
                 <Route path="/" component= {Home} exact />
                 <Route path="/todo" component={Todo} />
                 <Route path="/feed" component={Feed} />
-                <Route path="/contact" component={Contact} />
+                <Route path="/contact" component={Contact} exact />
+                <Route path="/photo" component={Photo} exact />
+                <Route path="/photo/create" component={PhotoCreate} />
+                <Route path="/photo/:id" component={PhotoDetail} exact />
+                <Route path="/photo/edit/:id" component={PhotoEdit} />
+                <Route path="/contacts" component={Contacts} exact/>
+                <Route path="/contacts/create" component={ContactCreate} />
+                <Route path="/contacts/:id" component={ContactDetail} exact />
+                <Route path="/contacts/edit/:id" component={ContactEdit} exact />
               </Switch>
             </Suspense>
           </main>

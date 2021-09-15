@@ -17,6 +17,8 @@ $light: #f8f9fa;
 $dark: #212529;
 
 $border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
 // $btn-border-radius: 0;
 // $btn-border-radius-sm: 0;
 // $btn-border-radius-lg: 0;
@@ -31,6 +33,9 @@ $border-radius: 0;
 @import "~bootstrap/scss/utilities";
 /* ---------------------------------------------- */
 // Layout & Components
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/buttons";
 @import "~bootstrap/scss/buttons";
 @import "~bootstrap/scss/card";
 @import "~bootstrap/scss/forms";
@@ -40,6 +45,7 @@ $border-radius: 0;
 @import "~bootstrap/scss/modal";
 @import "~bootstrap/scss/tables";
 @import "~bootstrap/scss/dropdown";
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
 // @import "~bootstrap/scss/";
 /* ---------------------------------------------- */
 @import "~bootstrap/scss/helpers";

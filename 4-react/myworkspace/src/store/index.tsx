@@ -9,10 +9,18 @@
 // ** 이러한 state드은 다른 컴포넌트와 state가 공유됨
 import { configureStore } from "@reduxjs/toolkit";
 import profileReducer from "../domain/profile/profileSlice";
+import photoReducer from "../domain/photo/photoSlice";
+import contactReducer from "../domain/contact/ContactSlice";
+
+import { enableMapSet } from "immer";
+enableMapSet();
+
 
 export const store = configureStore({
   reducer: {
     profile: profileReducer,
+    photo: photoReducer,
+    contact: contactReducer,
   }, // 각, state 별로 처리할 외부 reducer 목록
   devTools: true, // 개발툴 사용 여부
 });
