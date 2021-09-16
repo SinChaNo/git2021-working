@@ -1,6 +1,6 @@
 import produce from "immer";
 import { useEffect, useRef, useState } from "react"
-import { ContactItem } from "./contact/ContactSlice";
+// import { ContactItem } from "./ContactSlice";
 
 interface ContactState {
   id: number,
