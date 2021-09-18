@@ -37,6 +37,7 @@ public class ContactController {
 	// Post
 	@PostMapping(value = "/contacts")
 	public Contact postContact(@RequestBody Contact contact, HttpServletResponse res) {
+		System.out.println(contact);
 		// Error
 		if (contact.getName() == null || contact.getName().isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -53,6 +54,7 @@ public class ContactController {
 
 			return null;
 		}
+		
 		// create Id
 		Long currentId = maxId.incrementAndGet();
 
@@ -61,9 +63,9 @@ public class ContactController {
 				.name(contact.getName().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.phone(contact.getPhone().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.email(contact.getEmail().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
-				.memo(contact.getMemo().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
-				.createdTime(new Date().getTime()).build();
+				.build();
 		contacts.put(currentId, contactItem);
+		
 		return contactItem;
 	}
 
@@ -108,7 +110,6 @@ public class ContactController {
 		findItem.setName(contact.getName());
 		findItem.setPhone(contact.getPhone());
 		findItem.setEmail(contact.getEmail());
-		findItem.setMemo(contact.getMemo());
 
 		return findItem;
 	}

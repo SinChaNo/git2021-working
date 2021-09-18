@@ -137,7 +137,7 @@ const Contact = () => {
 
   return (
     <>
-      <h1 className ="text-center">Contact</h1>
+      <h1 className ="text-center">Contact Inline Back</h1>
   
       <form className="d-flex" action="" ref = {formRef} >
         <input type="text" className="mx-auto px-3" placeholder="이름" id ="name" ref ={nameRef}/>

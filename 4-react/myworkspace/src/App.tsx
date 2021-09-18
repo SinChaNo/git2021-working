@@ -9,7 +9,7 @@ import { store } from "./store";
 const Todo = lazy(() => import("./features/todo/Todo"));
 const Feed = lazy(() => import("./features/feed/Feed"));
 const Contact = lazy(() => import("./features/contact/Contact"));
-const ContactInline = lazy(() => import("./features/contact/ContactInlineEdit"));
+const ContactInline = lazy(() => import("./features/contect_back/ContactInlineEdit"));
 const Photo = lazy(() => import("./features/photo/Photo"));
 const PhotoCreate = lazy(() => import("./features/photo/PhotoCreate"));
 const PhotoDetail = lazy(() => import("./features/photo/PhotoDetail"));
