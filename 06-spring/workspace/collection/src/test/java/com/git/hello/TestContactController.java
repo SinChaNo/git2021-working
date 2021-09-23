@@ -20,7 +20,7 @@ public class TestContactController {
 	@Test
 	void addContact() {
 		ContactController controller = new ContactController();
-		Contact expected = Contact.builder().name("Test").phone("010-1234-1234").email("email@email.com").memo("Test")
+		Contact expected = Contact.builder().name("Test").phone("010-1234-1234").email("email@email.com")
 				.build();
 
 		controller.postContact(expected, new MockHttpServletResponse());
@@ -32,12 +32,11 @@ public class TestContactController {
 		assertEquals(expected.getName(), actual.getName());
 		assertEquals(expected.getPhone(), actual.getPhone());
 		assertEquals(expected.getEmail(), actual.getEmail());
-		assertEquals(expected.getMemo(), actual.getMemo());
 	}
 
 	void removeContact() {
 		ContactController controller = new ContactController();
-		Contact testItem = Contact.builder().name("Test").phone("010-1234-1234").email("email@email.com").memo("Test")
+		Contact testItem = Contact.builder().name("Test").phone("010-1234-1234").email("email@email.com")
 				.build();
 		controller.postContact(testItem, new MockHttpServletResponse());
 
@@ -52,15 +51,14 @@ public class TestContactController {
 	void editContact() {
 		ContactController controller = new ContactController();
 
-		Contact testItem = Contact.builder().name("Test").phone("010-1234-1234").email("email@email.com").memo("Test")
+		Contact testItem = Contact.builder().name("Test").phone("010-1234-1234").email("email@email.com")
 				.build();
 		controller.postContact(testItem, new MockHttpServletResponse());
 
 		String editName = "Edit Name";
 		String editPhone = "Edit Phone";
 		String editEmail = "Edit Email";
-		String editMemo = "Edit Memo";
-		Contact editData = Contact.builder().name(editName).phone(editPhone).email(editEmail).memo(editMemo).build();
+		Contact editData = Contact.builder().name(editName).phone(editPhone).email(editEmail).build();
 
 		HttpServletResponse res = new MockHttpServletResponse();
 
@@ -69,7 +67,6 @@ public class TestContactController {
 		assertEquals(editName, contacts.get(0).getPhone());
 		assertEquals(editPhone, contacts.get(0).getEmail());
 		assertEquals(editEmail, contacts.get(0).getName());
-		assertEquals(editMemo, contacts.get(0).getMemo());
 
 		Contact resultContactId = controller.editContact(2, editData, res);
 		assertNull(resultContactId);
@@ -80,7 +77,7 @@ public class TestContactController {
 		assertEquals(HttpServletResponse.SC_BAD_REQUEST, res.getStatus());
 
 		Contact resultContactItemEmpty = controller.editContact(1,
-				Contact.builder().name("").phone("").email("").memo("").build(), res);
+				Contact.builder().name("").phone("").email("").build(), res);
 		assertNull(resultContactItemEmpty);
 		assertEquals(HttpServletResponse.SC_BAD_REQUEST, res.getStatus());
 	}

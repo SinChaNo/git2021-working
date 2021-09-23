@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from "react"
 import produce from "immer";
 import axios from "axios";
 import api from "./contactApi";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
+import { requestFetchContact } from "../../saga/contactSaga";
 
 interface ContactState {
   id: number;
@@ -12,11 +15,13 @@ interface ContactState {
   isEdit: boolean;
 }
 
-const Contact = () => {
+const ContactInlineEdit = () => {
   const [contactList, setContactList] = useState<ContactState[]>([]);
   const [isError, setIsError] = useState(false);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [errMessage, setErrMessage] = useState("");
+  const state = useSelector((state: RootState) => state.contact);
+  const dispatch = useDispatch<AppDispatch>();
 
   const formRef = useRef<HTMLFormElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
@@ -27,12 +32,19 @@ const Contact = () => {
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
 
 
+  useEffect(() => {
+    if(!state.isFetched){
+      dispatch(requestFetchContact());
+    }
+  }, [dispatch, state.isFetched])
+
   const fetchData = async () => {
     const res = await api.fetch();
 
     const contact = res.data.map((item) => ({
       id : item.id,
       name : item.name,
+      phone : item.phone,
       email : item.email,
     })) as ContactState[]
 
@@ -41,6 +53,7 @@ const Contact = () => {
 
     console.log("--2. fetch completed--");
   };
+
 
   useEffect(() => {
     console.log("---1.mounted---");
@@ -152,6 +165,15 @@ const Contact = () => {
           }}
         >
           추가하기
+        </button>
+        <button
+          className="btn btn-secondary me-2"
+          onClick={() => {
+            dispatch(requestFetchContact());
+          }}
+        >
+          <i className="bi bi-arrow-clockwise"></i>
+          새로고침
         </button>
       </form>
       {isError && (
@@ -286,4 +308,4 @@ const Contact = () => {
   )
 }
 
-export default Contact;
+export default ContactInlineEdit;

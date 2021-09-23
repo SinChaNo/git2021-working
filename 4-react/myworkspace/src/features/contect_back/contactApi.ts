@@ -1,12 +1,12 @@
 import axios from "axios";
 
-interface ContacteResponse {
+export interface ContactResponse {
   id: number;
   name: string;
   phone: string; 
   email: string; 
 }
-interface ContactRequest {
+export interface ContactRequest {
   name: string;
   phone: string;
   email: string;
@@ -14,10 +14,10 @@ interface ContactRequest {
 
 const contactApi = {
   fetch: () =>
-    axios.get<ContacteResponse[]>(`${process.env.REACT_APP_API_BASE}/contacts`),
+    axios.get<ContactResponse[]>(`${process.env.REACT_APP_API_BASE}/contacts`),
   
   add: (contactItem: ContactRequest) =>
-    axios.post<ContacteResponse>(
+    axios.post<ContactResponse>(
       `${process.env.REACT_APP_API_BASE}/contacts`,contactItem
     ),
   
@@ -25,7 +25,7 @@ const contactApi = {
     axios.delete<boolean>(`${process.env.REACT_APP_API_BASE}/contacts/${id}`),
 
   edit: (id:number, contactItem: ContactRequest) =>
-    axios.put<ContacteResponse>(
+    axios.put<ContactResponse>(
       `${process.env.REACT_APP_API_BASE}/contacts/${id}`,contactItem
     ),
 };

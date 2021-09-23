@@ -5,9 +5,9 @@ export interface ContactItem {
   name: string,
   phone: string,
   email: string,
-  memo?: string,
-  createTime: number,
-  modifyTime?: number,
+  // memo?: string,
+  // createTime: number,
+  // modifyTime?: number,
 }
 
 interface ContactState {
@@ -43,13 +43,19 @@ const contactSlice = createSlice({
         ContactItem.name = editItem.name;
         ContactItem.phone = editItem.phone;
         ContactItem.email = editItem.email;
-        ContactItem.memo = editItem.memo;
-        ContactItem.createTime = editItem.createTime;
+        // ContactItem.memo = editItem.memo;
+        // ContactItem.createTime = editItem.createTime;
       }
+    },
+
+    initialContact: (state, action: PayloadAction<ContactItem[]>) => {
+      const contacts = action.payload;
+      state.data = contacts;
+      state.isFetched = true;
     }
   }
 })
 
-export const { addContact, removeContact, editContact } = contactSlice.actions;
+export const { addContact, removeContact, editContact, initialContact } = contactSlice.actions;
 
 export default contactSlice.reducer;

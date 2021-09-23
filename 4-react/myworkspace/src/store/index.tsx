@@ -13,7 +13,14 @@ import photoReducer from "../features/photo/photoSlice";
 import contactReducer from "../features/contact/ContactSlice";
 
 import { enableMapSet } from "immer";
+
+import rootSaga from "../saga";
+import createSagaMiddleware from "@redux-saga/core";
+
+const sagaMiddelware = createSagaMiddleware();
 enableMapSet();
+
+
 
 
 export const store = configureStore({
@@ -22,8 +29,13 @@ export const store = configureStore({
     photo: photoReducer,
     contact: contactReducer,
   }, // 각, state 별로 처리할 외부 reducer 목록
+  // middleware는 여러개 사용할 수 있음, [defaultMiddleware, sagaMiddleware]
+  middleware: [sagaMiddelware],
   devTools: true, // 개발툴 사용 여부
 });
+
+//sagaMiddleware 실행
+sagaMiddelware.run(rootSaga);
 
 // typescript에서는 몇가지 타입 선언을 해야함
 
