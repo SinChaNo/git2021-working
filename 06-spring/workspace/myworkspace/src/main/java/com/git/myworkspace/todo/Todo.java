@@ -1,4 +1,4 @@
-package com.git.hello.contact;
+package com.git.myworkspace.todo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Contact {
+public class Todo {
 	private long id;
-	private String name;
-	private String phone;
-	private String email;
+	private String memo;
 	private long createdTime;
 }

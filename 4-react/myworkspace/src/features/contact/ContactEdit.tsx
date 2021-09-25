@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
 import { editContact } from "./ContactSlice";
+import api from "./contactApi"
 
 
 
@@ -18,6 +19,27 @@ const ContactEdit = () => {
   const phoneRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const memoRef = useRef<HTMLTextAreaElement>(null);
+  
+  const fetchData = async () => {
+    // 백엔드에서 데이터 받아옴
+    const res = await api.fetch();
+
+    const contact = res.data.map((item) => ({
+      id : item.id,
+      name : item.name,
+      phone : item.phone,
+      email : item.email,
+    }))
+
+    console.log(contact)
+  }
+
+  useEffect(() => {
+    console.log("--1. mounted--");
+    // 백엔드에서 데이터를 받아올 것임
+    // ES8 style로 async-await 기법을 이용해서 데이터를 조회해옴
+    fetchData();
+  }, []);
 
  
   

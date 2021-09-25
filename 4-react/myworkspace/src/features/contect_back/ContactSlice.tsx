@@ -5,6 +5,7 @@ export interface ContactItem {
   name: string,
   phone: string,
   email: string,
+  createTime: number;
   // memo?: string,
   // createTime: number,
   // modifyTime?: number,
@@ -43,8 +44,8 @@ const contactSlice = createSlice({
         ContactItem.name = editItem.name;
         ContactItem.phone = editItem.phone;
         ContactItem.email = editItem.email;
+        ContactItem.createTime = editItem.createTime;
         // ContactItem.memo = editItem.memo;
-        // ContactItem.createTime = editItem.createTime;
       }
     },
 

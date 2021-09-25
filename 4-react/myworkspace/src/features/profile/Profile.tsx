@@ -148,7 +148,7 @@ const Profile = () => {
                     save
                   </a>
                   <a 
-                    href=""
+                    href="#!"
                     className = "link-secondary fs-6 text-nowrap"
                     onClick={(e) => {
                       e.preventDefault();

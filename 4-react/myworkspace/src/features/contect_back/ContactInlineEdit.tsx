@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "react"
 
 import produce from "immer";
-import axios from "axios";
 import api from "./contactApi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { requestFetchContact } from "../../saga/contactSaga";
-
+import Alert from "../../components/Alert";
 interface ContactState {
   id: number;
   name: string;
   phone: string;
   email: string;
   isEdit: boolean;
+  createdTime: number;
 }
 
 const ContactInlineEdit = () => {
@@ -46,6 +46,7 @@ const ContactInlineEdit = () => {
       name : item.name,
       phone : item.phone,
       email : item.email,
+      createdTime: item.createdTime,
     })) as ContactState[]
 
       setContactList(contact);
@@ -82,6 +83,7 @@ const ContactInlineEdit = () => {
         phone: result.data.phone,
         email: result.data.email,
         isEdit: false,
+        createdTime: new Date().getTime(),
       }
   
       setContactList(
@@ -176,8 +178,16 @@ const ContactInlineEdit = () => {
           새로고침
         </button>
       </form>
+      
       {isError && (
-        alert(`에러입니다!`)
+        <Alert
+        message={errMessage}
+        variant={"danger"}
+        // 닫기 버튼을 클릭할 때 처리하는 함수를 넘김
+        onClose={() => {
+          setIsError(false);
+        }}
+      />
       )}
       <table 
         id="table"

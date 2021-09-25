@@ -34,6 +34,7 @@ function* addData(action: PayloadAction<ContactItem>) {
     name: result.data.name,
     phone: result.data.phone,
     email: result.data.email,
+    createTime: result.data.createdTime,
   };
 
   yield put(addContact(contactItem));
@@ -49,7 +50,8 @@ function* fetchData() {
       id: item.id,
       name: item.name,
       phone: item.phone,
-      email: item.email
+      email: item.email,
+      createTime: item.createdTime,
     } as ContactItem)
   );
   yield put(initialContact(contacts));

@@ -28,8 +28,8 @@ const ContactEdit = () => {
       item.name = nameRef.current ? nameRef.current.value : " ";
       item.phone = phoneRef.current ? phoneRef.current.value : " ";
       item.email = emailRef.current ? emailRef.current.value : " ";
-      item.memo = memoRef.current ? memoRef.current.value : " ";
       item.createTime = new Date().getTime();
+      // item.memo = memoRef.current ? memoRef.current.value : " ";
   
       dispatch(editContact(item));
       history.push(`/contacts/${ContactItem.id}`);

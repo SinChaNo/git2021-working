@@ -64,6 +64,7 @@ const Contacts = () => {
             createTime : item.createTime,
           })) as ContactItem[]
           // setContact(contacts);
+          console.log(contacts);
         }, 2000)
       })
       console.log("--3. fetch completed--")

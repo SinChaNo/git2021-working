@@ -11,31 +11,36 @@ import { configureStore } from "@reduxjs/toolkit";
 import profileReducer from "../features/profile/profileSlice";
 import photoReducer from "../features/photo/photoSlice";
 import contactReducer from "../features/contact/ContactSlice";
+import progressReducer from "../components/progress/progressSlice";
+import alertReducer from "../components/alert/alertSlice";
 
-import { enableMapSet } from "immer";
-
+// 최상위 SAGA
 import rootSaga from "../saga";
 import createSagaMiddleware from "@redux-saga/core";
 
-const sagaMiddelware = createSagaMiddleware();
-enableMapSet();
+// sagamiddleware
+// 중간을 처리하는 소프트웨어
+const sagaMiddleware = createSagaMiddleware();
 
 
-
-
+// 전역상태(global state) 저장소
+// 다른 컴포넌트와 state가 공유가능
 export const store = configureStore({
+  // 각 state 별로 처리할 reducer
   reducer: {
     profile: profileReducer,
     photo: photoReducer,
     contact: contactReducer,
+    progress: progressReducer,
+    alert: alertReducer,
   }, // 각, state 별로 처리할 외부 reducer 목록
   // middleware는 여러개 사용할 수 있음, [defaultMiddleware, sagaMiddleware]
-  middleware: [sagaMiddelware],
+  middleware: [sagaMiddleware],
   devTools: true, // 개발툴 사용 여부
 });
 
 //sagaMiddleware 실행
-sagaMiddelware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
 // typescript에서는 몇가지 타입 선언을 해야함
 

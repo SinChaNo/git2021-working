@@ -1,10 +1,13 @@
 import "./App.scss"
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import Home from "./features/Home";
-import Profile from "./features/profile/Profile";
 import { Provider } from "react-redux";
 import { store } from "./store";
+
+import Home from "./features/Home";
+import Profile from "./features/profile/Profile";
+import Progress from "./components/progress/progress";
+import AlertStack from "./components/alert/AlertStack";
 
 const Todo = lazy(() => import("./features/todo/Todo"));
 const Feed = lazy(() => import("./features/feed/Feed"));
@@ -40,7 +43,7 @@ function App() {
             <li><Link to="/feed">Feed</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             <li><Link to="/contactInline">ContactInline</Link></li>
-            <li><Link to="/photo">Photo</Link></li>
+            <li><Link to="/photos">Photo</Link></li>
             <li><Link to="/contacts">newContact</Link></li>
           </ul>
           </nav>
@@ -52,16 +55,19 @@ function App() {
                 <Route path="/feed" component={Feed} />
                 <Route path="/contact" component={Contact} exact />
                 <Route path="/contactInline" component={ContactInline} exact />
-                <Route path="/photo" component={Photo} exact />
-                <Route path="/photo/create" component={PhotoCreate} />
-                <Route path="/photo/:id" component={PhotoDetail} exact />
-                <Route path="/photo/edit/:id" component={PhotoEdit} />
+                <Route path="/photos" component={Photo} exact />
+                <Route path="/photos/create" component={PhotoCreate} />
+                <Route path="/photos/:id" component={PhotoDetail} exact />
+                <Route path="/photos/edit/:id" component={PhotoEdit} />
                 <Route path="/contacts" component={Contacts} exact/>
                 <Route path="/contacts/create" component={ContactCreate} />
                 <Route path="/contacts/:id" component={ContactDetail} exact />
                 <Route path="/contacts/edit/:id" component={ContactEdit} exact />
               </Switch>
             </Suspense>
+
+            <Progress />
+            <AlertStack />
           </main>
         </div>
       </Router>

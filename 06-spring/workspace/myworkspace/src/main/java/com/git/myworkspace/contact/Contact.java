@@ -1,4 +1,4 @@
-package com.git.hello.contact;
+package com.git.myworkspace.contact;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

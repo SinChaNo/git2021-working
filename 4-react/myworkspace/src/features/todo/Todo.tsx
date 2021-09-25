@@ -41,6 +41,7 @@ const Todo = () => {
   // 빈 값 여부 state
   const [isError, setIsError] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  console.log(isEdit);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);

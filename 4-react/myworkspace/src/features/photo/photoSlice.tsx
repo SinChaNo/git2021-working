@@ -1,102 +1,91 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { type } from "os";
-import { catImg, hamster, penguin } from "../../common/data"
 
+// 데이터 구조
 export interface PhotoItem {
   id: number;
   title: string;
   description?: string;
   photoUrl: string;
   profileUrl: string;
-  username: string;
+  fileType: string;
+  fileName: string;
+  createdTime: number;
 }
 
+// 백엔드 연동 고려 state 구조 설계 
 interface PhotoState {
-  data: Map<number, PhotoItem>;
-  isFetched: boolean;
+  data: PhotoItem[];            // 포토 아이템 배열
+  isFetched: boolean;           // 서버에서 데이터를 받아왔는지에 대한 여부
+  isAddCompleted?: boolean;     // 데이터 추가 완료의 여부
+  isRemoveCompleted?: boolean;  // 데이터 삭제 완료의 여부 
+  isModifyCompleted?: boolean;  // 데이터 수정 완료의 여부
 }
 
-const initialState : PhotoState = {
-  data: new Map([
-    [
-      5,
-      {
-        id: 5,
-        title: "햄스터?",
-        description: "사실은 고양이",
-        photoUrl: penguin,
-        profileUrl: catImg,
-        username: "SinChaNo",
-      },
-    ],
-    [
-      4,
-      {
-        id: 4,
-        title: "햄스터?",
-        description: "사실은 고양이",
-        photoUrl: hamster,
-        profileUrl: catImg,
-        username: "SinChaNo",
-      },
-    ],
-    [
-      3,
-      {
-        id: 3,
-        title: "햄스터?",
-        description: "사실은 고양이",
-        photoUrl: hamster,
-        profileUrl: catImg,
-        username: "SinChaNo",
-      },
-    ],
-    [
-      2,
-      {
-        id: 2,
-        title: "햄스터?",
-        description: "사실은 고양이",
-        photoUrl: penguin,
-        profileUrl: catImg,
-        username: "SinChaNo",
-      },
-    ],
-    [
-      1,
-      {
-        id: 1,
-        title: "햄스터?",
-        description: "사실은 고양이",
-        photoUrl: hamster,
-        profileUrl: catImg,
-        username: "SinChaNo",
-      },
-    ],
-  ]),
+// photo state를 목록 -> array
+const initialState: PhotoState = {
+  data: [],
   isFetched: false,
-
-}
+};
 
 const photoSlice = createSlice({
-  name:"photo",
+  name: "photo",
   initialState,
   reducers: {
-    addPhoto: (state, action:PayloadAction<PhotoItem>) => {
+    // PayloadAction<payload타입>
+    // payload로 item객체를 받음
+    addPhoto: (state, action: PayloadAction<PhotoItem>) => {
       const photo = action.payload;
-      state.data.set(photo.id, photo);
+      state.data.unshift(photo);
+      state.isAddCompleted = true; // 추가 되었음을 표시
     },
-    removePhoto: (state, action:PayloadAction<number>) => {
+
+    initialCompleted: (state) => {
+      delete state.isAddCompleted;
+      delete state.isRemoveCompleted;
+      delete state.isModifyCompleted;
+    },
+
+    removePhoto: (state, action: PayloadAction<number>) => {
       const id = action.payload;
-      state.data.delete(id)
+      state.data.splice(
+        state.data.findIndex((item) => item.id === id),
+        1
+      );
+      state.isRemoveCompleted = true;
     },
-    editPhoto: (state, action:PayloadAction<PhotoItem>) => {
-      const photo = action.payload;
-      state.data.set(photo.id, photo);
-    }
+
+    modifyPhoto: (state, action: PayloadAction<PhotoItem>) => {
+      const modifyItem = action.payload;
+
+      const photoItem = state.data.find((item) => item.id === modifyItem.id);
+
+      if (photoItem) {
+        photoItem.title = modifyItem.title;
+        photoItem.description = modifyItem.description;
+        photoItem.photoUrl = modifyItem.photoUrl;
+        photoItem.fileName = modifyItem.fileName;
+        photoItem.fileType = modifyItem.fileType;
+      }
+      // 변경되었음
+      state.isModifyCompleted = true;
+    },
+
+    // payload값으로 state를 초기화하는 reducer 필요
+    initialPhoto: (state, action: PayloadAction<PhotoItem[]>) => {
+      const photos = action.payload;
+      state.data = photos;
+      state.isFetched = true;
+    },
   },
 });
 
-export const {addPhoto, removePhoto, editPhoto} = photoSlice.actions;
+// action creator 내보내기
+export const {
+  addPhoto,
+  removePhoto,
+  modifyPhoto,
+  initialPhoto,
+  initialCompleted,
+} = photoSlice.actions;
 
 export default photoSlice.reducer;
