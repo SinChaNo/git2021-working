@@ -8,12 +8,8 @@ import { PhotoItem } from "./photoSlice";
 
 const PhotoCreate = () => {
   // 입력 폼 ref 객체
-  
-  // 제목
   const titleInput = useRef<HTMLInputElement>(null);
-  // 본문
   const descTxta = useRef<HTMLTextAreaElement>(null);
-  // 파일
   const fileInput = useRef<HTMLInputElement>(null);
 
   // 포토 데이터 배열 가져오기
@@ -41,9 +37,9 @@ const PhotoCreate = () => {
   const handleAddClick = () => {
     // console.log(titleInput.current?.value);
     // console.log(descTxta.current?.value);
-    // if (fileInput.current?.files?.length) {
+    if (fileInput.current?.files?.length) {
       // console.log(fileInput.current.files[0]);
-    // }
+    }
 
     if (fileInput.current?.files?.length) {
       const imageFile = fileInput.current.files[0];
@@ -61,7 +57,6 @@ const PhotoCreate = () => {
           fileName: imageFile.name,
           // 시스템 값(작성일시, 수정일시, 수정한사람....)
           createdTime: new Date().getTime(),
-          profileUrl: ""
         };
 
         // console.log(item);

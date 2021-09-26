@@ -4,8 +4,8 @@ import produce from "immer";
 import api from "./contactApi";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { requestFetchContact } from "../../saga/contactSaga";
-import Alert from "../../components/Alert";
+import { requestFetchContact } from "./contactSaga";
+import Alert from "../../components/alert/Alert";
 interface ContactState {
   id: number;
   name: string;

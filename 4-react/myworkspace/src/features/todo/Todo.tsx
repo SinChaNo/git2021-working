@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Alert from "../../components/Alert";
+import Alert from "../../components/alert/Alert";
 import { useSelector } from "react-redux";
 import { TodoState } from "../type"
 import { RootState } from "../../store";

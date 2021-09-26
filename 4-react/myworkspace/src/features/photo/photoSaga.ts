@@ -94,7 +94,6 @@ function* addData(action: PayloadAction<PhotoItem>) {
       fileType: result.data.fileType,
       fileName: result.data.fileName,
       createdTime: result.data.createdTime,
-      profileUrl: ""
     };
 
     // dispatcher(액션)과 동일함
@@ -219,7 +218,6 @@ function* modifyData(action: PayloadAction<PhotoItem>) {
     fileType: result.data.fileType,
     fileName: result.data.fileName,
     createdTime: result.data.createdTime,
-    profileUrl: ""
   };
 
   // state 변경

@@ -11,16 +11,16 @@ import AlertStack from "./components/alert/AlertStack";
 
 const Todo = lazy(() => import("./features/todo/Todo"));
 const Feed = lazy(() => import("./features/feed/Feed"));
-const Contact = lazy(() => import("./features/contact/Contact"));
+// const Contact = lazy(() => import("./features/contact/Contact"));
 const ContactInline = lazy(() => import("./features/contect_back/ContactInlineEdit"));
 const Photo = lazy(() => import("./features/photo/Photo"));
 const PhotoCreate = lazy(() => import("./features/photo/PhotoCreate"));
 const PhotoDetail = lazy(() => import("./features/photo/PhotoDetail"));
 const PhotoEdit = lazy(() => import("./features/photo/PhotoEdit"));
 const Contacts = lazy(() => import("./features/contact/Contact"));
-const ContactCreate = lazy(() => import("./features/contact/ContactCreate"));
-const ContactDetail = lazy(() => import("./features/contact/ContactDetail"));
-const ContactEdit = lazy(() => import("./features/contact/ContactEdit"));
+// const ContactCreate = lazy(() => import("./features/contact/ContactCreate"));
+// const ContactDetail = lazy(() => import("./features/contact/ContactDetail"));
+// const ContactEdit = lazy(() => import("./features/contact/ContactEdit"));
 
 
 
@@ -41,10 +41,10 @@ function App() {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/todo">Todo</Link></li>
             <li><Link to="/feed">Feed</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+            {/* <li><Link to="/contact">Contact</Link></li> */}
             <li><Link to="/contactInline">ContactInline</Link></li>
             <li><Link to="/photos">Photo</Link></li>
-            <li><Link to="/contacts">newContact</Link></li>
+            {/* <li><Link to="/contacts">newContact</Link></li> */}
           </ul>
           </nav>
           <main className="content-container">
@@ -53,16 +53,16 @@ function App() {
                 <Route path="/" component= {Home} exact />
                 <Route path="/todo" component={Todo} />
                 <Route path="/feed" component={Feed} />
-                <Route path="/contact" component={Contact} exact />
+                {/* <Route path="/contact" component={Contact} exact /> */}
                 <Route path="/contactInline" component={ContactInline} exact />
                 <Route path="/photos" component={Photo} exact />
                 <Route path="/photos/create" component={PhotoCreate} />
-                <Route path="/photos/:id" component={PhotoDetail} exact />
+                <Route path="/photos/detail/:id" component={PhotoDetail} exact />
                 <Route path="/photos/edit/:id" component={PhotoEdit} />
                 <Route path="/contacts" component={Contacts} exact/>
-                <Route path="/contacts/create" component={ContactCreate} />
+                {/* <Route path="/contacts/create" component={ContactCreate} />
                 <Route path="/contacts/:id" component={ContactDetail} exact />
-                <Route path="/contacts/edit/:id" component={ContactEdit} exact />
+                <Route path="/contacts/edit/:id" component={ContactEdit} exact /> */}
               </Switch>
             </Suspense>
 

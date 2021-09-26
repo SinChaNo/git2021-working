@@ -1,15 +1,12 @@
 package com.git.myworkspace.contact;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,18 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ContactController {
-//	public ConcurrentSkipListMap<Long, Contact> contacts = new ConcurrentSkipListMap<Long, Contact>();
-	private SortedMap<Long, Contact> contacts = Collections
-			.synchronizedSortedMap(new TreeMap<Long, Contact>(Collections.reverseOrder()));
-
-//	public AtomicLong maxId = new AtomicLong();
-	private AtomicLong maxId = new AtomicLong();
+////	public ConcurrentSkipListMap<Long, Contact> contacts = new ConcurrentSkipListMap<Long, Contact>();
+//	private SortedMap<Long, Contact> contacts = Collections
+//			.synchronizedSortedMap(new TreeMap<Long, Contact>(Collections.reverseOrder()));
+//
+////	public AtomicLong maxId = new AtomicLong();
+//	private AtomicLong maxId = new AtomicLong();
+	
+	private ContactRepository repo;
+	
+	@Autowired
+	public ContactController(ContactRepository repo) {
+		this.repo = repo;
+	}
 
 	// Get
 	@GetMapping(value = "/contacts")
 	public List<Contact> getContacts() {
 		// 맵 데이터 역정렬
-		return new ArrayList<Contact>(contacts.values());
+		return repo.findAll();
 	}
 
 	// Post
@@ -56,16 +60,18 @@ public class ContactController {
 		}
 		
 		// create Id
-		Long currentId = maxId.incrementAndGet();
+//		Long currentId = maxId.incrementAndGet();
 
 		// 입력받은 객체로 Contact객체 생성
-		Contact contactItem = Contact.builder().id(currentId)
+		Contact contactItem = Contact.builder()
 				.name(contact.getName().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.phone(contact.getPhone().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.email(contact.getEmail().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.createdTime(new Date().getTime())
 				.build();
-		contacts.put(currentId, contactItem);
+		repo.save(contactItem);
+		
+		res.setStatus(HttpServletResponse.SC_CREATED);
 		
 		return contactItem;
 	}
@@ -73,45 +79,49 @@ public class ContactController {
 	// Delete
 	@DeleteMapping(value = "/contacts/{id}")
 	public boolean removeContact(@PathVariable long id, HttpServletResponse res) {
-		Contact contact = contacts.get(Long.valueOf(id));
-		if (contact == null) {
+		Optional<Contact> contact = repo.findById(Long.valueOf(id));
+		if (contact.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return false;
 		}
 
-		contacts.remove(Long.valueOf(id));
+		repo.deleteById(id);
 		return true;
 	}
 
 	// Put
 	@PutMapping(value = "/contacts/{id}")
 	public Contact editContact(@PathVariable long id, @RequestBody Contact contact, HttpServletResponse res) {
-		Contact findItem = contacts.get(Long.valueOf(id));
-		if (findItem == null) {
+		Optional<Contact> contactItem = repo.findById(Long.valueOf(id));
+		if (contactItem.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
-		// Error
-		if (contact.getName() == null || contact.getName().isEmpty()) {
-			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//		// Error
+//		if (contactItem.isEmpty()) {
+//			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//
+//			return null;
+//		}
+//		if (contact.getPhone() == null || contact.getPhone().isEmpty()) {
+//			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//
+//			return null;
+//		}
+//		if (contact.getEmail() == null || contact.getEmail().isEmpty()) {
+//			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//
+//			return null;
+//		}
+		
+		Contact contactToSave = contactItem.get();
 
-			return null;
-		}
-		if (contact.getPhone() == null || contact.getPhone().isEmpty()) {
-			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		contactItem.get().setName(contact.getName());
+		contactItem.get().setPhone(contact.getPhone());
+		contactItem.get().setEmail(contact.getEmail());
+		
+		Contact contactSaved = repo.save(contactToSave);
 
-			return null;
-		}
-		if (contact.getEmail() == null || contact.getEmail().isEmpty()) {
-			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-			return null;
-		}
-
-		findItem.setName(contact.getName());
-		findItem.setPhone(contact.getPhone());
-		findItem.setEmail(contact.getEmail());
-
-		return findItem;
+		return contactSaved;
 	}
 }

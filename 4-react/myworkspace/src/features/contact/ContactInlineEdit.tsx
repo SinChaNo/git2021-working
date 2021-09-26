@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 
 import produce from "immer";
-import axios from "axios";
 import api from "./contactApi";
 
 interface ContactState {

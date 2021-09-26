@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import Alert from "../../components/Alert";
+import Alert from "../../components/alert/Alert";
 
 // 1건에 대한 타입
 interface TodoState {

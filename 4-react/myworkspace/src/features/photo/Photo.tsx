@@ -46,6 +46,7 @@ const Photo = () => {
         <button
           className="btn btn-secondary me-2"
           onClick={() => {
+            //서버에서 데이터를 받아오는 action
             dispatch(requestFetchPhotos());
           }}
         >

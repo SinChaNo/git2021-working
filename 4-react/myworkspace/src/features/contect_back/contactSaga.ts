@@ -1,8 +1,8 @@
 import { call, put, takeEvery, takeLatest } from "@redux-saga/core/effects";
 import { createAction, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
-import api, { ContactRequest, ContactResponse } from "../features/contect_back/contactApi";
-import ContactReducer, { addContact, ContactItem, initialContact }  from "../features/contect_back/ContactSlice";
+import api, { ContactRequest, ContactResponse } from "./contactApi";
+import ContactReducer, { addContact, ContactItem, initialContact }  from "./ContactSlice";
 
 export const requestAddContact = createAction<ContactItem>(
   `${ContactReducer.name}/requestAddContact`
@@ -57,7 +57,7 @@ function* fetchData() {
   yield put(initialContact(contacts));
 }
 
-export default function* photoSaga() {
+export default function* contactSaga() {
   yield takeEvery(requestAddContact, addData);
   yield takeLatest(requestFetchContact, fetchData);
 }

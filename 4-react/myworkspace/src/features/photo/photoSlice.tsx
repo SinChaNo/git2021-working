@@ -6,7 +6,6 @@ export interface PhotoItem {
   title: string;
   description?: string;
   photoUrl: string;
-  profileUrl: string;
   fileType: string;
   fileName: string;
   createdTime: number;
@@ -74,7 +73,7 @@ const photoSlice = createSlice({
     initialPhoto: (state, action: PayloadAction<PhotoItem[]>) => {
       const photos = action.payload;
       state.data = photos;
-      state.isFetched = true;
+      state.isFetched = false;
     },
   },
 });
