@@ -13,13 +13,20 @@ export interface ContactItem {
 interface ContactState {
   data: ContactItem[];
   isFetched: boolean;
+  totalElements?: number;
+  totalPages: number;
+  page: number;
+  pageSize: number;
+  isLast?: boolean;
 }
+const contactPageSize = localStorage.getItem("contact_page_size");
 
 const initialState : ContactState = {
-  data: [
-    
-  ],
+  data: [],
   isFetched: false,
+  page: 0,
+  pageSize: contactPageSize ? +contactPageSize : 2,
+  totalPages: 0,
 }
 
 

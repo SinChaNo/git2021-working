@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { requestFetchPhotos } from "./photoSaga";
+import Pagination from "../../components/Pagination";
 import { AppDispatch, RootState } from "../../store";
+import { requestFetchPagingPhotos, requestFetchPhotos } from "./photoSaga";
 // 시간을 보기 편하게 바꾸는 부분
 const getTimeString = (unixtime: number) => {
   // 1초: 1000
@@ -34,15 +35,52 @@ const Photo = () => {
     // photo 에 데이터가 fetch 되어있는지 확인
     if(!photoState.isFetched) {
       // fetch가 안되어있으면 데이터 받아오기
-      dispatch(requestFetchPhotos());
+      dispatch(
+        requestFetchPagingPhotos({
+          page: 0,
+          size: photoState.pageSize,
+        })
+      );
     }
-  }, [dispatch, photoState.isFetched])
+  }, [dispatch, photoState.isFetched, photoState.pageSize]);
+
+  const handlePageChanged = (page: number) => {
+    dispatch(
+      requestFetchPagingPhotos({
+        page,
+        size: photoState.pageSize,
+      })
+    );
+  };
+
+  const handlePageSizeChanged = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(
+      requestFetchPagingPhotos({
+        page: photoState.page,
+        size: +e.currentTarget.value,
+      })
+    );
+  };
+
 
   //보여지는 부분
   return(
     <div>
       <h2 className="text-center">My Photos</h2>
       <div className="d-flex justify-content-end mb-2">
+        <select
+          className="form-select form-select-sm me-2"
+          style={{ width: "60px" }}
+          onChange={(e) => {
+            handlePageSizeChanged(e);
+          }}
+        >
+          {[2, 4, 8, 12].map((size) => (
+            <option value={size} selected={photoState.pageSize === size}>
+              {size}
+            </option>
+          ))}
+        </select>
         <button
           className="btn btn-secondary me-2"
           onClick={() => {
@@ -98,6 +136,15 @@ const Photo = () => {
             {/* 컨텐트 wrapper -- 끝 */}
           </div>
         ))}
+      </div>
+      {/* pagination */}
+      <div className="d-flex justify-content-center mt-4">
+        <Pagination 
+          blockSize = {2} // 고정값
+          totalPages = {photoState.totalPages}
+          currentPage = {photoState.page}
+          onPageChanged = {handlePageChanged}
+        />
       </div>
     </div>
   )

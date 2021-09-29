@@ -11,6 +11,15 @@ export interface PhotoItem {
   createdTime: number;
 }
 
+export interface PhotoPage {
+  data: PhotoItem[];
+  totalElements: number;
+  totalPages: number;
+  page: number;
+  pageSize: number;
+  isLast: boolean;
+}
+
 // 백엔드 연동 고려 state 구조 설계 
 interface PhotoState {
   data: PhotoItem[];            // 포토 아이템 배열
@@ -18,12 +27,20 @@ interface PhotoState {
   isAddCompleted?: boolean;     // 데이터 추가 완료의 여부
   isRemoveCompleted?: boolean;  // 데이터 삭제 완료의 여부 
   isModifyCompleted?: boolean;  // 데이터 수정 완료의 여부
+  totalElements?: number;
+  totalPages: number;
+  page: number;
+  pageSize: number;
+  isLast?: boolean;
 }
 
 // photo state를 목록 -> array
 const initialState: PhotoState = {
   data: [],
   isFetched: false,
+  page: 0,
+  pageSize: 2,
+  totalPages: 0
 };
 
 const photoSlice = createSlice({
@@ -75,6 +92,16 @@ const photoSlice = createSlice({
       state.data = photos;
       state.isFetched = false;
     },
+
+    initialPagedPhoto: (state, action: PayloadAction<PhotoPage>) => {
+      state.data = action.payload.data;
+      state.totalElements = action.payload.totalElements;
+      state.totalPages = action.payload.totalPages;
+      state.page = action.payload.page;
+      state.pageSize = action.payload.pageSize;
+      state.isLast = action.payload.isLast;
+      state.isFetched = true;
+    }
   },
 });
 
@@ -85,6 +112,7 @@ export const {
   modifyPhoto,
   initialPhoto,
   initialCompleted,
+  initialPagedPhoto,
 } = photoSlice.actions;
 
 export default photoSlice.reducer;

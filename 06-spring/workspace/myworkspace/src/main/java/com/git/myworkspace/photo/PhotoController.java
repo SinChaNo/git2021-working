@@ -1,6 +1,5 @@
 package com.git.myworkspace.photo;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -8,12 +7,16 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.git.myworkspace.lib.TextProcesser;
@@ -30,8 +33,23 @@ public class PhotoController {
 	
 	@GetMapping(value = "/photos")
 	public List<Photo> getPhotos() throws InterruptedException {
-		return repo.findAll();
+		// 기본적으로 PK순정렬(asc, ascending) 되고 있는 상황
+//		return repo.findAll();
+		
+		// return repo.findAll(Sort.by("id").descending()); // 역정렬
+		// return repo.findAll(Sort.by("id").ascending()); // 순정렬		
+		return repo.findAll(Sort.by("id").descending());		
 	}
+	// 예시
+	// 한페이지 2개, 1번쨰 페이지
+	// GET /photos/paging?page=0&size=2
+	@GetMapping("/photos/paging")
+	public Page<Photo> getPhotosPaging(@RequestParam int page, int size) {
+		// findAll(Pageable page)
+		// findAll(PageRequest.of(page, isze
+		return repo.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
+	}
+	
 	
 	@PostMapping(value = "/photos")
 	public Photo addPhoto(@RequestBody Photo photo, HttpServletResponse res) throws InterruptedException {
