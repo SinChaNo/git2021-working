@@ -1,8 +1,7 @@
 package com.git.myworkspace.opendata.covid;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Index;
@@ -18,24 +17,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(indexes = @Index(name = "idx_covid_sido_hour_1", columnList = "gubun"))
-@IdClass(CovidSidoHourId.class)
-public class CovidSidoHour {
+@Table(indexes = @Index(name = "idx_covid_sido_daily_1", columnList = "gubun"))
+@IdClass(CovidSidoDailyId.class)
+public class CovidSidoDaily {
 	// 기준일시
 	@Id
 	private String stdDay;
 	// 시도명(한글)
 	@Id
+	@Column(columnDefinition = "varchar(20) collate \"ko_KR.utf8\"")
 	private String gubun;
 	
 	// 전일대비 증감 수
-	private String incDec;
+	private Integer incDec;
 	// 확진자 수
-	private String defCnt;
+	private Integer defCnt;
 	// 격리중 환자수
-	private String isolIngCnt;
+	private Integer isolIngCnt;
 	// 해외유입 수
-	private String overFlowCnt;
+	private Integer overFlowCnt;
 	// 지역발생 수
-	private String localOccCnt;
+	private Integer localOccCnt;
 }

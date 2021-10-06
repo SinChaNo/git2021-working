@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +20,17 @@ public class CovidService {
 	
 	private final String SERVICE_KEY = "HfulIbzTzvC%2FpEtI37wWaIUwpJmlbfzDP8Go1s%2BZLUAbWzi%2FpyRUqxYjGujtnaQn%2F3lMr3vIXiu3IFg1wd26Kw%3D%3D";
 	
-	private CovidSidoHourRepository repo;
+	private CovidSidoDailyRepository repo;
 	
 	@Autowired
-	public CovidService(CovidSidoHourRepository repo) {
+	public CovidService(CovidSidoDailyRepository repo) {
 		this.repo = repo;
 	}
 	
-	@Scheduled(fixedRate = 1000 * 60 * 60 * 1)
+	@Scheduled(cron = "0 5 10 * * *")
+	@CacheEvict(value = "covid-current", allEntries = true)	
 	@SuppressWarnings("deprecation")
-	public void requestCovidSidoHour() throws IOException {
+	public void requestCovidSidoDaily() throws IOException {
 		System.out.println(new Date().toLocaleString());
 		StringBuilder builder = new StringBuilder();
 		builder.append("http://openapi.data.go.kr/openapi");
@@ -51,24 +53,20 @@ public class CovidService {
 		String json = XML.toJSONObject(data).toString(2);
 		System.out.println(json);
 		
-		CovidSidoHourResponse response = new Gson().fromJson(json, CovidSidoHourResponse.class);
+		CovidSidoDailyResponse response = new Gson().fromJson(json, CovidSidoDailyResponse.class);
 		System.out.println(response);
 		
-		List<CovidSidoHour> list = new ArrayList<CovidSidoHour>();
-		for (CovidSidoHourResponse.Item item : response.getResponse().getBody().getItems().getItem()) {
-			CovidSidoHour record = CovidSidoHour.builder().stdDay(item.getStdDay()).gubun(item.getGubun())
-					.incDec(item.getIncDec()).defCnt(item.getDefCnt()).isolIngCnt(item.getIsolIngCnt()).overFlowCnt(item.getOverFlowCnt())
-					.localOccCnt(item.getLocalOccCnt()).build();
+		List<CovidSidoDaily> list = new ArrayList<CovidSidoDaily>();
+		for (CovidSidoDailyResponse.Item item : response.getResponse().getBody().getItems().getItem()) {
+			CovidSidoDaily record = CovidSidoDaily.builder().stdDay(item.getStdDay()).gubun(item.getGubun())
+					.incDec(Integer.valueOf(item.getIncDec())).defCnt(Integer.valueOf(item.getDefCnt())).isolIngCnt(Integer.valueOf(item.getIsolIngCnt()))
+					.overFlowCnt(Integer.valueOf(item.getOverFlowCnt())).localOccCnt(Integer.valueOf(item.getLocalOccCnt())).build();
 			
 			list.add(record);
 		}
 		repo.saveAll(list);
 	}
 }
-
-
-
-
 
 
 

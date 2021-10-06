@@ -1,5 +1,6 @@
 package com.git.myworkspace.opendata.air;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -22,11 +23,13 @@ public class AirSigunguHour {
 	@Id
 	private String dataTime;
 	@Id
+	@Column(columnDefinition = "varchar(20) collate \"ko_KR.utf8\"")
 	private String sidoName;
 	@Id
+	@Column(columnDefinition = "varchar(20) collate \"ko_KR.utf8\"")
 	private String cityName;
 	
-	private String pm10Value;
-	private String pm25Value;
+	private Integer pm10Value;
+	private Integer pm25Value;
 	
 }

@@ -4,7 +4,7 @@ import { Suspense, lazy } from "react";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
-import Home from "./features/Home";
+import Home from "./features/home/Home";
 import Profile from "./features/profile/Profile";
 import Progress from "./components/progress/progress";
 import AlertStack from "./components/alert/AlertStack";

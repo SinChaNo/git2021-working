@@ -1,13 +1,10 @@
 package com.git.myworkspace.opendata.covid;
 
 import java.util.List;
-
-import javax.persistence.Id;
-
 import lombok.Data;
 
 @Data
-public class CovidSidoHourResponse {
+public class CovidSidoDailyResponse {
 	private Response response;
 	
 	@Data

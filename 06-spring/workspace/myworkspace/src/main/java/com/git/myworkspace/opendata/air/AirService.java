@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,12 @@ public class AirService {
 	public AirService(AirSigunguHourRepository repo) {
 		this.repo = repo;
 	}
-	@Scheduled(fixedRate = 1000 * 60 * 60 * 1)
+	@Scheduled(cron = "0 30 * * * *")
+//	@Scheduled(fixedRate = 1000 * 60 * 60 * 1)
+	@CacheEvict(value = "air-current", allEntries = true)
 	public void requestAir() throws IOException {
-		String[] sidoNames = { "서울", "경기" };
+//		String[] sidoNames = { "서울", "경기" };
+		String[] sidoNames = { "서울" };
 		for (String sidoName : sidoNames) {
 			requestAirSiGunGuHour(sidoName);
 		}
@@ -85,7 +89,8 @@ public class AirService {
 		List<AirSigunguHour> list = new ArrayList<AirSigunguHour>();
 		for (AirSigunguHourResponse.Item item : response.getResponse().getBody().getItems().getItem()) {
 			AirSigunguHour record = AirSigunguHour.builder().dataTime(item.getDataTime()).sidoName(item.getSidoName())
-					.cityName(item.getCityName()).pm10Value(item.getPm10Value()).pm25Value(item.getPm25Value()).build();
+					.cityName(item.getCityName()).pm10Value(Integer.valueOf(item.getPm10Value()))
+					.pm25Value(Integer.valueOf(item.getPm25Value())).build();
 
 			list.add(record);
 		}

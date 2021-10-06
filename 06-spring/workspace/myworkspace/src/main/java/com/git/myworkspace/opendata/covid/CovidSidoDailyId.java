@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CovidSidoHourId implements Serializable{
+public class CovidSidoDailyId implements Serializable{
 private static final long serialVersionUID = 1L;
 	
 	private String stdDay;
