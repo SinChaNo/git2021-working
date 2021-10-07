@@ -3,35 +3,35 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts"
 
-const AirBar = () => {
+const CovidBar = () => {
   const [chartData, setChartData] = useState<{
-    options: ApexOptions; 
+    options: ApexOptions;
     serise: {
-      name : string;
-      data : number[];
+        name : string;
+        data : number[];
     }[];
   }>();
-  
+    // 데이터 받아오는 구간
   const getData = async () => {
     const result = await axios.get<
       {
-        dataTime: string;
-        sidoName: string;
-        cityName: string;
-        pm10Vaule: number;
-        pm25Value: number;
+        stdDay: String;
+        gubun: String;
+        incDec: number;
+        defCnt: number;
+        // overFlowCnt: number;
+        // localOccCnt: number;
       }[]
-    >(`${process.env.REACT_APP_API_BASE}/opendata/air/sido/current`);
+    >(`${process.env.REACT_APP_API_BASE}/opendata/covid/sido/current/`);
 
     const data = result.data;
 
-    // Chart Options, x
-    const options: ApexOptions ={
+    const options: ApexOptions = {
       title: {
-        text: `서울 미세먼지 현황 (${result.data[0].dataTime})`,
+        text: `전국 코로나 현황 (${result.data[0].stdDay})`,
       },
       xaxis: {
-        categories: data.map((item) => item.cityName),
+        categories: data.map((item) => item.gubun),
       },
       fill: {
         colors: [
@@ -57,15 +57,15 @@ const AirBar = () => {
         ],
       },
     };
-    
+
     const serise = [
       {
-        name: "PM10",
-        data: data.map((item) => item.pm10Vaule),
+        name: "전일 대비 증감",
+        data: data.map((item) => item.incDec)
       },
       {
-        name: "PM2.5",
-        data: data.map((item) => item.pm25Value),
+        name: "확진자 수",
+        data: data.map((item) => item.defCnt)
       },
     ];
 
@@ -75,7 +75,7 @@ const AirBar = () => {
   useEffect(() => {
     getData();
   }, []);
-  
+
 
   return (
     <div>
@@ -89,7 +89,7 @@ const AirBar = () => {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AirBar;
+export default CovidBar;
