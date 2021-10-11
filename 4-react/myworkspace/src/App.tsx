@@ -8,6 +8,7 @@ import Home from "./features/home/Home";
 import Profile from "./features/profile/Profile";
 import Progress from "./components/progress/progress";
 import AlertStack from "./components/alert/AlertStack";
+import EventMessage from "./components/EventMessage";
 
 const Todo = lazy(() => import("./features/todo/Todo"));
 const Feed = lazy(() => import("./features/feed/Feed"));
@@ -68,6 +69,7 @@ function App() {
 
             <Progress />
             <AlertStack />
+            <EventMessage />
           </main>
         </div>
       </Router>
