@@ -9,6 +9,6 @@ public class TestController {
 	@GetMapping(value = "/test")
 	public String test() {
 		System.out.println("--service 1--");
-		return "1";
+		return "2";
 	}
 }
