@@ -23,8 +23,9 @@ import com.git.myworkspace.lib.TextProcesser;
 
 @RestController
 public class PhotoController {
-	
+	// ì˜ì¡´ì£¼ì…
 	private PhotoRepository repo;
+	private PhotoCommentRepository cmtRepo;
 	
 	@Autowired
 	public PhotoController(PhotoRepository repo) throws InterruptedException {
@@ -33,15 +34,15 @@ public class PhotoController {
 	
 	@GetMapping(value = "/photos")
 	public List<Photo> getPhotos() throws InterruptedException {
-		// ±âº»ÀûÀ¸·Î PK¼øÁ¤·Ä(asc, ascending) µÇ°í ÀÖ´Â »óÈ²
+		// ï¿½âº»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PKï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(asc, ascending) ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½È²
 //		return repo.findAll();
 		
-		// return repo.findAll(Sort.by("id").descending()); // ¿ªÁ¤·Ä
-		// return repo.findAll(Sort.by("id").ascending()); // ¼øÁ¤·Ä		
+		// return repo.findAll(Sort.by("id").descending()); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// return repo.findAll(Sort.by("id").ascending()); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½		
 		return repo.findAll(Sort.by("id").descending());		
 	}
-	// ¿¹½Ã
-	// ÇÑÆäÀÌÁö 2°³, 1¹ø¤Š ÆäÀÌÁö
+	// ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½, 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	// GET /photos/paging?page=0&size=2
 	@GetMapping("/photos/paging")
 	public Page<Photo> getPhotosPaging(@RequestParam int page, int size) {
@@ -54,22 +55,22 @@ public class PhotoController {
 	@PostMapping(value = "/photos")
 	public Photo addPhoto(@RequestBody Photo photo, HttpServletResponse res) throws InterruptedException {
 		
-		Thread.sleep(1000);	// ÀÓ½Ã
+		Thread.sleep(1000);	// ï¿½Ó½ï¿½
 		
-		// Å¸ÀÌÆ²ÀÌ ºó°ª
+		// Å¸ï¿½ï¿½Æ²ï¿½ï¿½ ï¿½ï¿½
 		if(TextProcesser.isEmpyText(photo.getTitle())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 		
-		// ÆÄÀÏURLÀÌ ºó°ª
+		// ï¿½ï¿½ï¿½ï¿½URLï¿½ï¿½ ï¿½ï¿½
 		if(TextProcesser.isEmpyText(photo.getPhotoUrl())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 	
 		
-		// °´Ã¼ »ı¼º
+		// ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 		Photo photoItem = Photo.builder()
 									.title(photo.getTitle())
 									.description(TextProcesser.getPlainText(photo.getDescription()))
@@ -80,26 +81,26 @@ public class PhotoController {
 								.build();
 		repo.save(photoItem);
 		
-		// ¸®¼Ò½º »ı¼ºµÊ
+		// ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		res.setStatus(HttpServletResponse.SC_CREATED);
 		
 		
-		// Ãß°¡µÈ °´Ã¼¸¦ ¹İÈ¯
+		// ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½È¯
 		return photoItem;
 	}
 	
 	@DeleteMapping(value="/photos/{id}")
 	public boolean removePhotos(@PathVariable long id, HttpServletResponse res) throws InterruptedException {
 		
-		// id¿¡ ÇØ´çÇÏ´Â °´Ã¼°¡ ¾øÀ¸¸é
-		// Optional null-safe, ÀÚ¹Ù 1.8 ³ª¿Â¹æ½Ä
+		// idï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// Optional null-safe, ï¿½Ú¹ï¿½ 1.8 ï¿½ï¿½ï¿½Â¹ï¿½ï¿½
 		Optional<Photo> photo = repo.findById(Long.valueOf(id));
 		if(photo.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return false;
 		}
 		
-		// »èÁ¦ ¼öÇà
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		repo.deleteById(id);
 		
 		return true;
@@ -108,20 +109,20 @@ public class PhotoController {
 	@PutMapping(value="/photos/{id}")	
 	public Photo modifyPhotos(@PathVariable long id, @RequestBody Photo photo, HttpServletResponse res)throws InterruptedException {
 
-		// id¿¡ ÇØ´çÇÏ´Â °´Ã¼°¡ ¾øÀ¸¸é
+		// idï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		Optional<Photo> photoItem = repo.findById(Long.valueOf(id));
 		if(photoItem.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
 		
-		// Å¸ÀÌÆ²ÀÌ ºó°ª
+		// Å¸ï¿½ï¿½Æ²ï¿½ï¿½ ï¿½ï¿½
 		if(TextProcesser.isEmpyText(photo.getTitle())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 		
-		// ÆÄÀÏURLÀÌ ºó°ª
+		// ï¿½ï¿½ï¿½ï¿½URLï¿½ï¿½ ï¿½ï¿½
 		if(TextProcesser.isEmpyText(photo.getPhotoUrl())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
@@ -135,10 +136,24 @@ public class PhotoController {
 		photoItem.get().setFileType(photo.getFileType());
 		photoItem.get().setFileName(photo.getFileType());
 		
-		// id °¡ ÀÖÀ¸¸é UPDATE, ¾øÀ¸¸é INSERT
+		// id ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UPDATE, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ INSERT
 		Photo photoSaved = repo.save(photoToSave);
 		
 		return photoSaved;
 	}
+
+	@PostMapping(value = "/photos/{photoId}/comments")
+	public PhotoComment addPhotoComment(@PathVariable long photoId, @RequestBody PhotoComment comment) {
+		comment.setPhotoId(photoId);
+		comment.setCreatedTime((new Date().getTime()));
+
+		return cmtRepo.save(comment);
+	}
+
+	@GetMapping(value = "/photos/{photoId}/comments")
+	public List<PhotoComment> getComments(@PathVariable long photoId){
+		return cmtRepo.findByPhotoId(photoId);
+	}
+
 }
 

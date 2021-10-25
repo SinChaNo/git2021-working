@@ -1,5 +1,3 @@
-import Chart from "react-apexcharts";
-
 const ExchangeRate = () => {
   const data = [
     {
@@ -407,9 +405,24 @@ const ExchangeRate = () => {
     }
   ]
 
+  // interface ChartState {
+  //   result: number,             // 조회결과
+  //   cur_unit: String,           // 통화코드 !
+  //   ttb: number,                // 국가/통화면 !
+  //   tts: number,                // (송금) 받을 때 !
+  //   deal_bas_r: number,         // (송금) 보낼 때 !
+  //   bkpr: number,               // 매매 기준율 !
+  //   yy_efee_r: number,          // 장부가격
+  //   ten_dd_efee_r: number,      // 년환가료율
+  //   kftc_bkpr: number,          // 10일간 가료율
+  //   kftc_deal_bas_r: number,    // 서울외국환중개 매매기준율
+  //   cur_nm: string,             // 서울외국환중개 장부가격
+  // }
+
+  // const [chartData, setChartData] = useState<ChartState[]>([]);
+
   return (
     <div>
-      <Chart />
       <table className="table table-hover text-center top-10 my-5">
         <thead>
           <tr>
@@ -419,21 +432,19 @@ const ExchangeRate = () => {
             <td>
               매매 기준율
             </td>
-            <td>
-              살 때
-            </td>
-            <td>
-              팔 때
-            </td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>일본</td>
-            <td>1040.4</td>
-            <td>1100</td>
-            <td>900</td>
-          </tr>
+          {data.map((item, index) => (
+            <tr key = {item.cur_unit}>
+              <td>
+                {item.cur_nm}
+              </td>
+              <td>
+                {item.deal_bas_r}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
