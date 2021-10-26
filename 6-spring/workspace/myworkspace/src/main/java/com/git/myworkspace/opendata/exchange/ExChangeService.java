@@ -54,6 +54,6 @@ public class ExChangeService {
 		System.out.println(response);
 		
 		List<ExChange> list = new ArrayList<ExChange>();
-		
+		  
 	}
 }
