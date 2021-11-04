@@ -1,5 +1,6 @@
 package com.git.myworkspace.opendata.exchange;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class ExChange {
 	@Id
+	@Column(columnDefinition = "varchar(20) collate \"ko_KR.utf8\"")
 	private String curUnit;
 	private String ttb;
 	private String tts;
