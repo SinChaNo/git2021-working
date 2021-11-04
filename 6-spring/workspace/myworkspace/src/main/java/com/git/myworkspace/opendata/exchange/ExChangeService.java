@@ -67,14 +67,15 @@ public class ExChangeService {
 		for(ExChangeResponse res : list) {
 			ExChange record = ExChange.builder().result(res.getResult()).curUnit(res.getCur_unit()).ttb(res.getTtb()).tts(res.getTts())
 						.dealBasR(res.getDeal_bas_r()).bkpr(res.getBkpr()).yyEfeeR(res.getYy_efee_r())
-						.tenDdEfeeR(res.getTen_dd_efee_r()).kftcDkpr(res.getKftc_bkpr()).kftcDealDasR(res.getKftc_deal_bas_r())
+						.tenDdEfeeR(res.getTen_dd_efee_r()).kftcDkpr(res.getKftc_bkpr()).kftcDealDasR(res.getKftc_deal_bas_r()).curNm(res.getCur_nm())
 						.build();
 			item.add(record);
 		}
-		for(ExChangeResponse rates : list) {
-			System.out.println(rates);
-		}
 		
+		for(ExChangeResponse res : list) {
+			System.out.println(res);
+		}
+		// 엔티티 객체 -> 리포지터리로 저장 
 		repo.saveAll(item);
 	}
 }
