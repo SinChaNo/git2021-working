@@ -9,6 +9,7 @@ import lombok.Data;
 
 @Data
 public class ExChangeResponse {
+	private int result;
 	@Id
 	private String cur_unit;
 	private String ttb;
@@ -20,7 +21,6 @@ public class ExChangeResponse {
 	private String kftc_bkpr;
 	private String kftc_deal_bas_r;
 	private String cur_nm;
-	private int result;
 	
 //	public int getResult() {
 //		return result;
