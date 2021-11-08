@@ -3,6 +3,7 @@ package com.git.myworkspace.opendata.exchange;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,8 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ExChangeService {
+	
 	private final String AuthKey = "coZvPjTmHHugazuTqHYxjKaYG3JKVMHs";
-	private final String SearchDate = "20180102";
+	private final String SearchDate = "20211105";
 	
 	private ExChangeRepository repo;
 	
@@ -26,7 +28,7 @@ public class ExChangeService {
 		this.repo = repo;
 	}
 	// 스케쥴 시간마다 실행 
-	@Scheduled(fixedRate = 1000000)
+	@Scheduled(cron = "0 0 0/1 * * *")
 	@SuppressWarnings("deprecation")
 	public void requestExChange() throws IOException{
 		System.out.println(new Date().toLocaleString());
@@ -55,6 +57,7 @@ public class ExChangeService {
 		// mapper 선언
 		ObjectMapper mapper = new ObjectMapper();
 		
+		// mapper를 이용하여 JSon을 JAVA LIST객체화
 		List<ExChangeResponse> list = 
 			mapper.readValue(data, new TypeReference<List<ExChangeResponse>>(){});
 		
@@ -63,17 +66,14 @@ public class ExChangeService {
 		}
 		
 		// 응답 객체 -> 엔티티
+		// 데이터 현재 문자형 매매기준율 : "1,000.12"
+		// String -> double (','를 제거하기 위해 .replaceAll 사용
 		List<ExChange> item = new ArrayList<ExChange>();
 		for(ExChangeResponse res : list) {
-			ExChange record = ExChange.builder().result(res.getResult()).curUnit(res.getCur_unit()).ttb(res.getTtb()).tts(res.getTts())
-						.dealBasR(res.getDeal_bas_r()).bkpr(res.getBkpr()).yyEfeeR(res.getYy_efee_r())
-						.tenDdEfeeR(res.getTen_dd_efee_r()).kftcDkpr(res.getKftc_bkpr()).kftcDealDasR(res.getKftc_deal_bas_r()).curNm(res.getCur_nm())
-						.build();
+			ExChange record = ExChange.builder().curUnit(res.getCur_unit()).ttb(Double.parseDouble(res.getTtb().replaceAll(",", "")))
+					.tts(Double.parseDouble(res.getTts().replaceAll(",", ""))).dealBasR(Double.parseDouble(res.getDeal_bas_r().replaceAll(",", ""))).curNm(res.getCur_nm())
+					.build();
 			item.add(record);
-		}
-		
-		for(ExChangeResponse res : list) {
-			System.out.println(res);
 		}
 		// 엔티티 객체 -> 리포지터리로 저장 
 		repo.saveAll(item);

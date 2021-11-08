@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,16 +20,9 @@ import lombok.NoArgsConstructor;
 @Entity
 public class ExChange {
 	@Id
-	@Column(columnDefinition = "varchar(20) collate \"ko_KR.utf8\"")
 	private String curUnit;
-	private String ttb;
-	private String tts;
-	private String dealBasR;
-	private String bkpr;
-	private String yyEfeeR;
-	private String tenDdEfeeR;
-	private String kftcDkpr;
-	private String kftcDealDasR;
+	private double ttb;
+	private double tts;
+	private double dealBasR;
 	private String curNm;
-	private int result;
 }

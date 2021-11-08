@@ -30,7 +30,6 @@ public class HelloClientService {
 	@RabbitListener(queues = "test.hello.2")
 	public void receiveMessage(String message) throws UnsupportedEncodingException {
 		System.out.println("--test.hello.2--");
-		System.out.println("--내가 받은 메세지 표시--");
 		System.out.println(message);
 
 		emitters.values().parallelStream().forEach(emitter -> {
