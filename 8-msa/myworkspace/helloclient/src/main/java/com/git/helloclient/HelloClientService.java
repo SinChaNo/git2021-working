@@ -27,7 +27,7 @@ public class HelloClientService {
 		this.emitters.remove(clientId);
 	}
 
-	@RabbitListener(queues = "test.hello.2")
+	@RabbitListener(queues = "service.lobby")
 	public void receiveMessage(String message) throws UnsupportedEncodingException {
 		System.out.println("--test.hello.2--");
 		System.out.println(message);

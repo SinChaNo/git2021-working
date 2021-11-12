@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,9 +18,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ExChangeService {
+	// 현재 날짜 구하기
+	LocalDate now = LocalDate.now();
 	
+	// 포맷 정의
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+	// API 인증키
 	private final String AuthKey = "coZvPjTmHHugazuTqHYxjKaYG3JKVMHs";
-	private final String SearchDate = "20211105";
+	// 포맷 적용
+	private final String SearchDate = now.format(formatter);
 	
 	private ExChangeRepository repo;
 	
@@ -28,7 +35,9 @@ public class ExChangeService {
 		this.repo = repo;
 	}
 	// 스케쥴 시간마다 실행 
-	@Scheduled(cron = "0 0 0/1 * * *")
+	@Scheduled(cron = "0 30 11 * * *")
+	// 테스트용 스케쥴
+//	@Scheduled(fixedRate  = 1000000)
 	@SuppressWarnings("deprecation")
 	public void requestExChange() throws IOException{
 		System.out.println(new Date().toLocaleString());
