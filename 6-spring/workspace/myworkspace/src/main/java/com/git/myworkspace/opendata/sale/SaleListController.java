@@ -66,16 +66,17 @@ public class SaleListController {
 		// saleListItem을 massage byte배열에 저장
 		byte[] message = jsonString.getBytes();
 
-
+		// 변환한 byte[] 확인
 		System.out.println(message);
-
+		// rabbitmq 로 메세지 전송
 		service.sendMessage(message);
-		
+		// 완료시 http 코드 보냄
 		res.setStatus(HttpServletResponse.SC_CREATED);
 		
 		return saleListItem;
 	}
 	
+	// 메세지 통신 테스트용 매핑
 	@PostMapping(value = "/send-message")
 	public boolean sendMessage(@RequestBody String message, HttpServletRequest req) {
 		System.out.println(req.getHeader("content-type"));
@@ -92,6 +93,7 @@ public class SaleListController {
 //		return repo.findFirst10ByitemId(page, itemId);
 //	}
 	
+	// 최근 3건만 조회하는 페이징
 	@GetMapping(value = "/saleItemList/latest")
 	public Page<SaleList> getsalelatest(){
 		Pageable limit = PageRequest.of(0, 3, Sort.by("itemId").descending());
