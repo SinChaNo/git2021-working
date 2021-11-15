@@ -1,9 +1,16 @@
+import java.util.Scanner;
+
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("|\\_/|");
-		System.out.println("|q p|   /}");
-		System.out.println("( 0 )\"\"\"\\");
-		System.out.println("|\"^\"`    |");
-		System.out.println("||_/=\\\\__|");
+		int a;
+		int b;
+		
+		Scanner sc = new Scanner(System.in);
+
+		a = sc.nextInt();
+		b = sc.nextInt();
+		
+		double answer = (double) a / b;
+		System.out.println(answer);
 	}
 }
