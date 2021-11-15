@@ -7,12 +7,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.git.myworkspace.opendata.exchange.ExChange;
 
 @RestController
 public class SaleListController {
@@ -78,4 +85,17 @@ public class SaleListController {
 		
 		return true;
 	}
+	
+//	@GetMapping(value = "/saleItemList/latest")
+//	public List<SaleList>getSaleListLatestCurrnet(@PathVariable int itemId) {
+//		Pageable page = PageRequest.of(0, 3, Sort.by("itemId").descending());
+//		return repo.findFirst10ByitemId(page, itemId);
+//	}
+	
+	@GetMapping(value = "/saleItemList/latest")
+	public Page<SaleList> getsalelatest(){
+		Pageable limit = PageRequest.of(0, 3, Sort.by("itemId").descending());
+		return repo.findAll(limit);
+	}
+	
 }
